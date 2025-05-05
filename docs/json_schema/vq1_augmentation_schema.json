@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://lorecore.ai/schemas/vq1_augmentation_schema.json",
+    "title": "Augmentation Object (AUGMENTATION)",
+    "description": "Объект, представляющий результаты аугментации: суммаризацию, ключевые слова и ключевые факты для исходного объекта.",
+    "type": "object",
+    "properties": {
+      "originObject": {
+        "type": "string",
+        "format": "uuid",
+        "description": "ID исходного объекта, для которого выполнена аугментация."
+      },
+      "hasTopic": {
+        "type": "string",
+        "description": "Тема аугментации."
+      },
+      "hasDomain": {
+        "type": "string",
+        "description": "Область знаний."
+      },
+      "augSummary": {
+        "type": "string",
+        "description": "Суммарное описание объекта (до 512 токенов)."
+      },
+      "generatedBy": {
+        "type": "string",
+        "description": "Модель или источник, который сгенерировал эту аугментацию."
+      },
+      "keyWord": {
+        "type": "array",
+        "description": "Список ключевых слов, извлеченных с помощью LLM.",
+        "items": { "type": "string" }
+      },
+      "keyFact": {
+        "type": "array",
+        "description": "Список ключевых фактов, извлеченных из исходного текста.",
+        "items": { "type": "string" }
+      }
+    },
+    "required": ["originObject", "augTopic", "augDomain", "augSummary", "generatedBy", "augKeywords", "keyFacts"]
+  }
+  

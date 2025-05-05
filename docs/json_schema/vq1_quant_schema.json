@@ -1,0 +1,85 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://lorecore.ai/schemas/vq1_quant_schema.json",
+    "title": "Base Quant Object",
+    "description": "Универсальный контейнер для любых объектов в системе. Содержит базовые метаданные и ссылки на обработку.",
+    "type": "object",
+    "properties": {
+      "jsonVersion": {
+        "type": "string",
+        "description": "Версия JSON схемы для поддержки совместимости."
+      },
+      "_id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "Уникальный идентификатор объекта, генерируется детерминированно (на основе хэша) в заданном пространстве имён UUID5."
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Дата и время создания объекта (в формате ISO8601). +Z"
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Дата и время создания объекта (в формате ISO8601). +Z"
+      },
+      "type": {
+        "type": "string",
+        "enum": ["DOC", "KNOWLEDGE", "CHUNK", "THREAD", "MESSAGE", "QA", "UNIT", "AGENT", "PROJECT", "AUGMENTATION"],
+        "description": "Тип объекта, используемый для маршрутизации и обработки."
+      },
+      "accessLevel": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 6,
+        "description": "Уровень доступа от 0 (свободно) до 6 (эксклюзивный для администратора). (0 - свободно, 1 -  для клинетов, 2 - премиум клиенты, 3 - партнеры, 4 - внутренний документ компании доступный только для сотрудников, 5 - только для руководства в рамках одного клиента, 6 - только для админа вне завсимсти от аккаунта)"
+      },
+      "fromAccount": {
+        "type": "string",
+        "description": "ID Аккаунта клиента, к которому относится объект."
+      },
+      "fromProject": {
+        "type": ["string", "null"],
+        "description": "Проект, к которому относится объект. Если null – объект общего назначения (Default)."
+      },
+      "graphRecord": {
+        "type": ["string", "null"],
+        "description": "URI объекта в GraphDB, если присутствует."
+      },
+      "vectorised": {
+        "type": ["string", "null"],
+        "description": "Идентификатор объекта в векторном хранилище (если векторизация выполнена)."
+      },
+      "version": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Порядковый номер версии объекта."
+      },
+      "language": {
+        "type": "string",
+        "enum": ["ru", "en"],
+        "description": "Язык содержимого объекта."
+      },
+      "primaryModality": {
+        "type": "string",
+        "description": "Указывает основную модальность объекта (текст, аудио, видео и т.д.)"
+      },
+      "secondaryModality": {
+        "type": "string",
+        "description": "Указывает дополнительную модальность объекта (не обязательно поле)"
+      },
+      "processingStage": {
+        "type": "string",
+        "enum": ["created", "augmented", "completed"],
+        "description": "Стадия обработки объекта (создан, аугментирован, завершён)."
+      },
+      "hasParent": {
+        "type": ["string", "null"],
+        "format": "uuid",
+        "description": "Ссылка на родительский объект, если применимо."
+      }
+    },
+    "required": ["jsonVersion", "_id", "createdAt", "type", "accessLevel", "fromAccount", "version", "hasPrimaryModality", "processingStage"]
+  }
+  

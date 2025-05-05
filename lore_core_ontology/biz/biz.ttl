@@ -1,0 +1,203 @@
+@prefix : <https://lorecore.ai/ont/biz/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://lorecore.ai/ont/biz/> .
+
+<https://lorecore.ai/ont/biz> rdf:type owl:Ontology ;
+                               owl:versionIRI <https://lorecore.ai/ont/biz#Biz/1.0.0> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/date
+<http://purl.org/dc/elements/1.1/date> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://lorecore.ai/ont/core.ttl#fromAccount
+<https://lorecore.ai/ont/core.ttl#fromAccount> rdf:type owl:ObjectProperty ,
+                                                        owl:FunctionalProperty ,
+                                                        owl:SymmetricProperty ;
+                                               rdfs:domain <https://lorecore.ai/ont/core.ttl#Quant> ;
+                                               rdfs:range <https://lorecore.ai/ont/core.ttl#Account> ;
+                                               <http://purl.org/dc/elements/1.1/date> "2025-04-24T11:13:22Z"^^xsd:dateTime ;
+                                               rdfs:comment "Свойство указывающее на аккаунт к которому принадлежит объект (UUID аккаунта)"@ru ;
+                                               rdfs:label "fromAccount" .
+
+
+###  https://lorecore.ai/ont/core.ttl#hasStatus
+<https://lorecore.ai/ont/core.ttl#hasStatus> rdf:type owl:ObjectProperty ,
+                                                      owl:FunctionalProperty ;
+                                             rdfs:domain <https://lorecore.ai/ont/core.ttl#Project> ;
+                                             rdfs:range <https://lorecore.ai/ont/core.ttl#Status> ;
+                                             <http://purl.org/dc/elements/1.1/date> "2025-04-25T05:14:43Z"^^xsd:dateTime ;
+                                             rdfs:comment "Статус проекта, закфиксированный в отдельном объекте"@ru ;
+                                             rdfs:label "hasStatus"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://lorecore.ai/ont/core.ttl#accountName
+<https://lorecore.ai/ont/core.ttl#accountName> rdf:type owl:DatatypeProperty ,
+                                                        owl:FunctionalProperty ;
+                                               rdfs:domain <https://lorecore.ai/ont/core.ttl#Account> ;
+                                               rdfs:range xsd:string ;
+                                               <http://purl.org/dc/elements/1.1/date> "2025-05-01T17:58:59Z"^^xsd:dateTime ;
+                                               rdfs:comment "accountName"@en ,
+                                                            "Хранит название аккаунта"@ru .
+
+
+###  https://lorecore.ai/ont/core.ttl#isActive
+<https://lorecore.ai/ont/core.ttl#isActive> rdf:type owl:DatatypeProperty ,
+                                                     owl:FunctionalProperty ;
+                                            rdfs:domain <https://lorecore.ai/ont/core.ttl#Account> ,
+                                                        <https://lorecore.ai/ont/core.ttl#Agent> ;
+                                            rdfs:range xsd:boolean ;
+                                            <http://purl.org/dc/elements/1.1/date> "2025-05-01T18:00:29Z"^^xsd:dateTime ;
+                                            rdfs:comment "Указывает, активен ли аккаунт  или агент"@ru ;
+                                            rdfs:label "isActive"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#lastUpdated
+<https://lorecore.ai/ont/core.ttl#lastUpdated> rdf:type owl:DatatypeProperty ,
+                                                        owl:FunctionalProperty ;
+                                               rdfs:domain <https://lorecore.ai/ont/core.ttl#Profile> ;
+                                               rdfs:range xsd:dateTime ;
+                                               <http://purl.org/dc/elements/1.1/date> "2025-05-01T18:17:04Z"^^xsd:dateTime ;
+                                               rdfs:comment "Дата и время последнего обновления профиля"@ru ;
+                                               rdfs:label "lastUpdated"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://schema.org/Organization
+<http://schema.org/Organization> rdf:type owl:Class .
+
+
+###  http://schema.org/Person
+<http://schema.org/Person> rdf:type owl:Class .
+
+
+###  http://schema.org/SoftwareApplication
+<http://schema.org/SoftwareApplication> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Account
+<https://lorecore.ai/ont/core.ttl#Account> rdf:type owl:Class ;
+                                           <http://purl.org/dc/elements/1.1/date> "2025-04-24T09:59:02Z"^^xsd:dateTime ;
+                                           rdfs:comment "Описание аккаунта, одни аккаунт может содержать в себе несколько организаций и несколько агентов" ;
+                                           rdfs:label "Account"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#Agent
+<https://lorecore.ai/ont/core.ttl#Agent> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Category
+<https://lorecore.ai/ont/core.ttl#Category> rdf:type owl:Class ;
+                                            rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Profile> .
+
+
+###  https://lorecore.ai/ont/core.ttl#Contact
+<https://lorecore.ai/ont/core.ttl#Contact> rdf:type owl:Class ;
+                                           rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Profile> .
+
+
+###  https://lorecore.ai/ont/core.ttl#Description
+<https://lorecore.ai/ont/core.ttl#Description> rdf:type owl:Class ;
+                                               rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Profile> .
+
+
+###  https://lorecore.ai/ont/core.ttl#Encoder
+<https://lorecore.ai/ont/core.ttl#Encoder> rdf:type owl:Class ;
+                                           rdfs:subClassOf <http://schema.org/SoftwareApplication> .
+
+
+###  https://lorecore.ai/ont/core.ttl#LLM
+<https://lorecore.ai/ont/core.ttl#LLM> rdf:type owl:Class ;
+                                       rdfs:subClassOf <http://schema.org/SoftwareApplication> .
+
+
+###  https://lorecore.ai/ont/core.ttl#Organization
+<https://lorecore.ai/ont/core.ttl#Organization> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://schema.org/Organization> .
+
+
+###  https://lorecore.ai/ont/core.ttl#Policy
+<https://lorecore.ai/ont/core.ttl#Policy> rdf:type owl:Class ;
+                                          rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Profile> .
+
+
+###  https://lorecore.ai/ont/core.ttl#Profile
+<https://lorecore.ai/ont/core.ttl#Profile> rdf:type owl:Class ;
+                                           <http://purl.org/dc/elements/1.1/date> "2025-04-24T17:30:45Z"^^xsd:dateTime ;
+                                           rdfs:comment "Общий класс для описания профиля агента (любого активного субъекта-источника данных в системе)"@ru ;
+                                           rdfs:label "Profile"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#Project
+<https://lorecore.ai/ont/core.ttl#Project> rdf:type owl:Class ;
+                                           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <https://lorecore.ai/ont/core.ttl#hasStatus> ;
+                                                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onClass <https://lorecore.ai/ont/core.ttl#Status>
+                                                           ] .
+
+
+###  https://lorecore.ai/ont/core.ttl#Quant
+<https://lorecore.ai/ont/core.ttl#Quant> rdf:type owl:Class ;
+                                         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                           owl:onProperty <https://lorecore.ai/ont/core.ttl#fromAccount> ;
+                                                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                           owl:onClass <https://lorecore.ai/ont/core.ttl#Account>
+                                                         ] .
+
+
+###  https://lorecore.ai/ont/core.ttl#Role
+<https://lorecore.ai/ont/core.ttl#Role> rdf:type owl:Class ;
+                                        rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Profile> .
+
+
+###  https://lorecore.ai/ont/core.ttl#Service
+<https://lorecore.ai/ont/core.ttl#Service> rdf:type owl:Class ;
+                                           rdfs:subClassOf <http://schema.org/SoftwareApplication> .
+
+
+###  https://lorecore.ai/ont/core.ttl#Skill
+<https://lorecore.ai/ont/core.ttl#Skill> rdf:type owl:Class ;
+                                         rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Profile> .
+
+
+###  https://lorecore.ai/ont/core.ttl#Status
+<https://lorecore.ai/ont/core.ttl#Status> rdf:type owl:Class ;
+                                          <http://purl.org/dc/elements/1.1/date> "2025-04-25T05:12:17Z"^^xsd:dateTime ;
+                                          rdfs:comment "Класс для создания статусов объектов"@ru ;
+                                          rdfs:label "Status"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#Unit
+<https://lorecore.ai/ont/core.ttl#Unit> rdf:type owl:Class ;
+                                        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                          owl:onProperty <https://lorecore.ai/ont/core.ttl#hasStatus> ;
+                                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                          owl:onClass <https://lorecore.ai/ont/core.ttl#Status>
+                                                        ] .
+
+
+###  https://lorecore.ai/ont/core.ttl#User
+<https://lorecore.ai/ont/core.ttl#User> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://schema.org/Person> .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi

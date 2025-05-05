@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://lorecore.ai/schemas/vq1_knowledge_schema.json",
+    "title": "External Knowledge Object (KNOWLEDGE)",
+    "description": "Объект внешнего источника, преобразуемый в текст. Проходит ETL для извлечения текста.",
+    "type": "object",
+    "properties": {
+      "fileName": {
+        "type": "string",
+        "description": "Имя исходного файла."
+      },
+      "fileHash": {
+        "type": "string",
+        "description": "Хэш файла для контроля изменений."
+      },
+      "link": {
+        "type": ["string", "null"],
+        "format": "uri",
+        "description": "Внешний URL источника, если применимо."
+      }
+    },
+    "required": ["KBfilename", "KBfilehash", "sourceText"]
+  }
+  

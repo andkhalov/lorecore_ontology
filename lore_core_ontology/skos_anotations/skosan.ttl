@@ -1,0 +1,956 @@
+@prefix : <https://lorecore.ai/ont/skos#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix core: <https://lorecore.ai/ont/core.ttl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@base <https://lorecore.ai/ont/skos/> .
+
+<https://lorecore.ai/ont/skos> rdf:type owl:Ontology ;
+                               owl:versionIRI <https://lorecore.ai/ont/skos#SKOS/1.0.0> .
+
+#################################################################
+#    Quant - базовый класс для всех объектов
+#################################################################
+
+core:Quant skos:definition "Ядро системы - базовая схема 'QUANT' (Quantum Object), определяющая общие поля и метаданные для всех объектов"@ru ,
+                      "Core of the system - the basic 'QUANT' (Quantum Object) schema that defines common fields and metadata for all objects"@en ;
+       skos:example "Объект класса Quant с UUID 12345, версией 1.0, созданный 2025-04-01 с уровнем доступа 3"@ru ,
+                    "A Quant class object with UUID 12345, version 1.0, created on 2025-04-01 with access level 3"@en ;
+       skos:note "Все объекты в системе LoreCore наследуются от Quant, что обеспечивает единообразие метаданных"@ru ,
+                "All objects in the LoreCore system inherit from Quant, which ensures metadata uniformity"@en .
+
+#################################################################
+#    Agent - агенты системы (люди и боты)
+#################################################################
+
+core:Agent skos:definition "Агент - активный участник системы, имеющий определенную роль, природу (человек или программа) и набор характеристик"@ru ,
+                      "Agent - active participant in the system with a defined role, nature (human or program), and set of characteristics"@en ;
+        skos:example "Агент типа User с ролью 'Менеджер', имеющий навыки работы с CRM-системой"@ru ,
+                     "Agent of User type with the role 'Manager', having skills in working with a CRM system"@en ;
+        skos:broader :Quant ;
+        skos:related :Role, :Skill, :Policy ;
+        skos:altLabel "Участник"@ru, "Пользователь"@ru, "Participant"@en, "User"@en, "Bot"@en .
+
+#################################################################
+#    Augmentation - аугментация (обогащение) объектов
+#################################################################
+
+core:Augmentation skos:definition "Аугментация - дополнительная информация, извлеченная из объекта с помощью инференса, включающая ключевые факты, слова, темы"@ru ,
+                           "Augmentation - additional information extracted from an object through inference, including key facts, words, topics"@en ;
+              skos:example "Аугментация документа, содержащая 5 ключевых фактов, 10 ключевых слов и суммаризацию текста"@ru ,
+                           "Document augmentation containing 5 key facts, 10 keywords, and text summarization"@en ;
+              skos:broader :Quant ;
+              skos:related :Inference, :Topic, :Domain .
+
+#################################################################
+#    Chunk - фрагмент большого документа
+#################################################################
+
+core:Chunk skos:definition "Чанк - фрагмент большого документа, используемый для векторизации и семантического поиска"@ru ,
+                      "Chunk - fragment of a large document used for vectorization and semantic search"@en ;
+       skos:example "Чанк размером 512 токенов, содержащий абзац текста из документа 'Корпоративная политика'"@ru ,
+                     "Chunk of 512 tokens containing a paragraph from the 'Corporate Policy' document"@en ;
+       skos:broader :Quant ;
+       skos:related :Knowledge, :KeyFact, :Keyword .
+
+#################################################################
+#    Document - документы системы
+#################################################################
+
+core:Document skos:definition "Документ - файл или текст, загруженный пользователем или созданный системой, имеющий тип, метаданные и содержимое"@ru ,
+                        "Document - file or text, uploaded by a user or created by the system, having a type, metadata, and content"@en ;
+          skos:example "PDF-документ 'Отчет_Q1_2025.pdf' размером 2.5 МБ, загруженный пользователем user123"@ru ,
+                       "PDF document 'Report_Q1_2025.pdf' with size 2.5 MB, uploaded by user user123"@en ;
+          skos:broader :Quant ;
+          skos:related :DocumentType, :Knowledge ;
+          skos:altLabel "Файл"@ru, "Отчет"@ru, "File"@en, "Report"@en .
+
+#################################################################
+#    Knowledge - источники знаний
+#################################################################
+
+core:Knowledge skos:definition "Знание - структурированная информация, извлеченная из внешних источников и обогащенная системой"@ru ,
+                         "Knowledge - structured information extracted from external sources and enriched by the system"@en ;
+           skos:example "База знаний по теме 'Искусственный интеллект', состоящая из 50 документов и 500 чанков"@ru ,
+                        "Knowledge base on the topic 'Artificial Intelligence', consisting of 50 documents and 500 chunks"@en ;
+           skos:broader :Quant ;
+           skos:related :Chunk, :Document ;
+           skos:altLabel "База знаний"@ru, "Информация"@ru, "Knowledge base"@en, "Information"@en .
+
+#################################################################
+#    Message - сообщения между агентами
+#################################################################
+
+core:Message skos:definition "Сообщение - текст или медиаконтент, отправленный агентом в рамках треда или отдельно"@ru ,
+                       "Message - text or media content sent by an agent within a thread or separately"@en ;
+         skos:example "Сообщение 'Добрый день, помогите с оформлением заказа' от пользователя client456 в треде поддержки"@ru ,
+                      "Message 'Good day, please help with placing an order' from user client456 in a support thread"@en ;
+         skos:broader :Quant ;
+         skos:related :Thread, :Agent, :Sentiment, :Intention ;
+         skos:altLabel "Текст"@ru, "Пост"@ru, "Text"@en, "Post"@en .
+
+#################################################################
+#    Project - проекты в системе
+#################################################################
+
+core:Project skos:definition "Проект - логическая группировка объектов с общей целью, статусом и сроками выполнения"@ru ,
+                       "Project - logical grouping of objects with a common goal, status, and deadlines"@en ;
+         skos:example "Проект 'Запуск нового продукта' со статусом 'В процессе' и дедлайном 2025-06-30"@ru ,
+                      "Project 'New Product Launch' with status 'In Progress' and deadline 2025-06-30"@en ;
+         skos:broader :Quant ;
+         skos:related :Status, :Agent ;
+         skos:altLabel "Задача"@ru, "Инициатива"@ru, "Task"@en, "Initiative"@en .
+
+#################################################################
+#    QAPair - пары вопрос-ответ
+#################################################################
+
+core:QAPair skos:definition "QAPair - пара вопрос-ответ, используемая для обучения моделей и решения конкретных задач"@ru ,
+                      "QAPair - question-answer pair used for model training and solving specific tasks"@en ;
+        skos:example "Вопрос 'Какие документы нужны для оформления заказа?' и ответ с перечислением необходимых документов"@ru ,
+                     "Question 'What documents are required for placing an order?' and answer listing the necessary documents"@en ;
+        skos:broader :Quant ;
+        skos:related :Message, :Evaluation, :Topic ;
+        skos:altLabel "Вопрос-ответ"@ru, "Диалог"@ru, "Question-answer"@en, "Dialog"@en .
+
+#################################################################
+#    Thread - цепочка сообщений
+#################################################################
+
+core:Thread skos:definition "Тред - последовательность связанных сообщений, образующих логическую дискуссию или диалог"@ru ,
+                      "Thread - sequence of related messages forming a logical discussion or dialogue"@en ;
+        skos:example "Тред поддержки клиента с 5 сообщениями, начатый 2025-05-01 и завершенный решением проблемы"@ru ,
+                     "Customer support thread with 5 messages, started on 2025-05-01 and completed with problem resolution"@en ;
+        skos:broader :Quant ;
+        skos:related :Message, :Media, :QAPair ;
+        skos:altLabel "Диалог"@ru, "Чат"@ru, "Обсуждение"@ru, "Dialogue"@en, "Chat"@en, "Discussion"@en .
+
+#################################################################
+#    Unit - товары и услуги
+#################################################################
+
+core:Unit skos:definition "Юнит - товар или услуга, имеющая название, цену, статус и описание"@ru ,
+                    "Unit - product or service with a name, price, status, and description"@en ;
+      skos:example "Товар 'Смартфон XYZ' с ценой 50000 рублей и статусом 'В наличии'"@ru ,
+                   "Product 'Smartphone XYZ' with price $500 and status 'In Stock'"@en ;
+      skos:broader :Quant ;
+      skos:related :Category, :Status, :Description ;
+      skos:altLabel "Товар"@ru, "Услуга"@ru, "Product"@en, "Service"@en .
+
+#################################################################
+#    Inference - классы для результатов анализа
+#################################################################
+
+core:Inference skos:definition "Инференс - результат работы модели машинного обучения или аналитической функции"@ru ,
+                         "Inference - result of a machine learning model or analytical function"@en ;
+           skos:example "Результат анализа тональности сообщения с оценкой 0.85 (позитивная)"@ru ,
+                        "Result of message sentiment analysis with a score of 0.85 (positive)"@en ;
+           skos:related :LLM, :Encoder, :Service ;
+           skos:altLabel "Вывод"@ru, "Анализ"@ru, "Результат"@ru, "Output"@en, "Analysis"@en, "Result"@en .
+
+core:Evaluation skos:definition "Оценка - измерение качества ответа системы по различным параметрам"@ru ,
+                          "Evaluation - measurement of system response quality across various parameters"@en ;
+            skos:example "Оценка ответа с accuracyScore=0.92, completenessScore=0.85, relevanceScore=0.78"@ru ,
+                         "Response evaluation with accuracyScore=0.92, completenessScore=0.85, relevanceScore=0.78"@en ;
+            skos:broader :Inference ;
+            skos:related :QAPair .
+
+core:Intention skos:definition "Намерение - предполагаемая цель сообщения пользователя (вопрос, запрос, жалоба и т.д.)"@ru ,
+                         "Intention - presumed purpose of a user message (question, request, complaint, etc.)"@en ;
+           skos:example "Намерение 'Запрос информации' для сообщения 'Какие у вас есть товары в категории X?'"@ru ,
+                        "Intention 'Information Request' for the message 'What products do you have in category X?'"@en ;
+           skos:broader :Inference ;
+           skos:related :Message .
+
+core:KeyFact skos:definition "Ключевой факт - важная фактическая информация, извлеченная из текста"@ru ,
+                       "Key fact - important factual information extracted from text"@en ;
+         skos:example "Ключевой факт 'Компания основана в 2020 году' из документа 'О компании'"@ru ,
+                      "Key fact 'Company was founded in 2020' from the document 'About the Company'"@en ;
+         skos:broader :Inference ;
+         skos:related :Chunk, :Augmentation .
+
+core:Keyword skos:definition "Ключевое слово - значимый термин, извлеченный из текста"@ru ,
+                       "Keyword - significant term extracted from text"@en ;
+         skos:example "Ключевое слово 'нейронная сеть' с весом 0.85 из документа по машинному обучению"@ru ,
+                      "Keyword 'neural network' with weight 0.85 from a machine learning document"@en ;
+         skos:broader :Inference ;
+         skos:related :Chunk, :Augmentation .
+
+core:Sentiment skos:definition "Тональность - эмоциональная окраска сообщения (позитивная, негативная, нейтральная)"@ru ,
+                         "Sentiment - emotional tone of a message (positive, negative, neutral)"@en ;
+           skos:example "Тональность 'Позитивная' с оценкой 0.92 для сообщения 'Отличный сервис, очень доволен!'"@ru ,
+                        "Sentiment 'Positive' with score 0.92 for the message 'Great service, very satisfied!'"@en ;
+           skos:broader :Inference ;
+           skos:related :Message .
+
+core:Summarisation skos:definition "Суммаризация - краткое изложение содержимого объекта на естественном языке"@ru ,
+                            "Summarization - brief overview of object content in natural language"@en ;
+              skos:example "Суммаризация длинного документа о финансовых результатах в три ключевых параграфа"@ru ,
+                           "Summarization of a long financial results document into three key paragraphs"@en ;
+              skos:broader :Inference ;
+              skos:related :Document, :Thread, :Augmentation .
+
+core:Topic skos:definition "Тема - основной предмет обсуждения в документе, треде или сообщении"@ru ,
+                     "Topic - main subject of discussion in a document, thread, or message"@en ;
+       skos:example "Тема 'Техническая поддержка' для треда с вопросами о работе программного обеспечения"@ru ,
+                    "Topic 'Technical Support' for a thread with questions about software operation"@en ;
+       skos:broader :Inference ;
+       skos:related :Domain, :Augmentation, :QAPair ;
+       skos:altLabel "Тематика"@ru, "Предмет"@ru, "Subject"@en, "Theme"@en .
+
+#################################################################
+#    Media - медиа и документы
+#################################################################
+
+core:Media skos:definition "Медиа - канал коммуникации, через который происходит обмен сообщениями"@ru ,
+                     "Media - communication channel through which messages are exchanged"@en ;
+       skos:example "Медиа 'Telegram-чат' с API-эндпоинтом для интеграции с ботом компании"@ru ,
+                    "Media 'Telegram chat' with API endpoint for integration with company bot"@en ;
+       skos:related :Thread, :Message ;
+       skos:altLabel "Канал"@ru, "Платформа"@ru, "Channel"@en, "Platform"@en .
+
+core:DocumentType skos:definition "Тип документа - классификация документа по формату и/или семантике"@ru ,
+                           "Document type - classification of a document by format and/or semantics"@en ;
+             skos:example "Тип документа 'Договор' с MIME-типом application/pdf"@ru ,
+                          "Document type 'Contract' with MIME-type application/pdf"@en ;
+             skos:related :Document ;
+             skos:altLabel "Формат"@ru, "Категория документа"@ru, "Format"@en, "Document category"@en .
+
+core:Domain skos:definition "Домен - область знаний или предметная область в системе"@ru ,
+                      "Domain - knowledge area or subject field in the system"@en ;
+        skos:example "Домен 'Искусственный интеллект' с поддоменами 'Машинное обучение', 'Нейронные сети'"@ru ,
+                     "Domain 'Artificial Intelligence' with subdomains 'Machine Learning', 'Neural Networks'"@en ;
+        skos:related :Topic, :Agent ;
+        skos:altLabel "Предметная область"@ru, "Сфера"@ru, "Subject area"@en, "Field"@en .
+
+#################################################################
+#    Biz - бизнес-объекты
+#################################################################
+
+core:Account skos:definition "Аккаунт - контейнер для организаций, агентов и других объектов в системе"@ru ,
+                       "Account - container for organizations, agents, and other objects in the system"@en ;
+         skos:example "Аккаунт 'Company XYZ' с 5 пользователями и 3 проектами"@ru ,
+                      "Account 'Company XYZ' with 5 users and 3 projects"@en ;
+         skos:related :Organization, :Agent ;
+         skos:altLabel "Учетная запись"@ru, "Организация"@ru, "Organization"@en, "Customer"@en .
+
+core:Profile skos:definition "Профиль - набор характеристик, описывающих агента или другую сущность"@ru ,
+                       "Profile - set of characteristics describing an agent or other entity"@en ;
+         skos:example "Профиль пользователя с контактными данными, ролью 'Менеджер' и набором навыков"@ru ,
+                      "User profile with contact information, role 'Manager', and a set of skills"@en ;
+         skos:related :Agent, :Role, :Skill .
+
+core:Category skos:definition "Категория - классификационная единица для объектов в системе"@ru ,
+                        "Category - classification unit for objects in the system"@en ;
+          skos:example "Категория товаров 'Смартфоны' с подкатегориями 'Android', 'iOS'"@ru ,
+                       "Product category 'Smartphones' with subcategories 'Android', 'iOS'"@en ;
+          skos:broader :Profile ;
+          skos:related :Unit, :Domain .
+
+core:Contact skos:definition "Контакт - информация для связи с агентом (телефон, email, адрес)"@ru ,
+                       "Contact - information for communicating with an agent (phone, email, address)"@en ;
+         skos:example "Контактные данные: email=user@example.com, телефон=+7-123-456-7890"@ru ,
+                      "Contact information: email=user@example.com, phone=+7-123-456-7890"@en ;
+         skos:broader :Profile ;
+         skos:related :Agent .
+
+core:Description skos:definition "Описание - текстовая характеристика объекта на естественном языке"@ru ,
+                          "Description - textual characterization of an object in natural language"@en ;
+            skos:example "Подробное описание товара 'Смартфон XYZ' с указанием технических характеристик"@ru ,
+                         "Detailed description of the product 'Smartphone XYZ' with technical specifications"@en ;
+            skos:broader :Profile ;
+            skos:related :Unit, :Agent .
+
+core:Policy skos:definition "Политика - набор правил и стратегий, определяющих поведение агента"@ru ,
+                      "Policy - set of rules and strategies that define agent behavior"@en ;
+        skos:example "Политика для бота поддержки, определяющая как отвечать на типовые вопросы"@ru ,
+                     "Policy for a support bot defining how to respond to typical questions"@en ;
+        skos:broader :Profile ;
+        skos:related :Agent, :Service .
+
+core:Role skos:definition "Роль - функциональная позиция агента в системе"@ru ,
+                    "Role - functional position of an agent in the system"@en ;
+      skos:example "Роль 'Администратор' с правами на управление всеми объектами в системе"@ru ,
+                   "Role 'Administrator' with rights to manage all objects in the system"@en ;
+      skos:broader :Profile ;
+      skos:related :Agent, :Skill ;
+      skos:altLabel "Должность"@ru, "Функция"@ru, "Position"@en, "Function"@en .
+
+core:Skill skos:definition "Навык - способность агента выполнять определенные действия"@ru ,
+                     "Skill - ability of an agent to perform certain actions"@en ;
+       skos:example "Навык 'Работа с CRM' с уровнем владения 'Эксперт'"@ru ,
+                    "Skill 'CRM Operation' with proficiency level 'Expert'"@en ;
+       skos:broader :Profile ;
+       skos:related :Agent, :Role, :Domain ;
+       skos:altLabel "Умение"@ru, "Компетенция"@ru, "Ability"@en, "Competence"@en .
+
+core:Status skos:definition "Статус - текущее состояние объекта в системе"@ru ,
+                      "Status - current state of an object in the system"@en ;
+        skos:example "Статус проекта 'В процессе' с процентом выполнения 75%"@ru ,
+                     "Project status 'In Progress' with completion percentage 75%"@en ;
+        skos:related :Project, :Unit ;
+        skos:altLabel "Состояние"@ru, "Этап"@ru, "State"@en, "Stage"@en .
+
+#################################################################
+#    Технические классы
+#################################################################
+
+core:LLM skos:definition "LLM - крупная языковая модель, используемая для генерации текста и анализа"@ru ,
+                    "LLM - large language model used for text generation and analysis"@en ;
+     skos:example "Модель LLM-5B, используемая для генерации ответов в системе поддержки клиентов"@ru ,
+                  "LLM-5B model used for generating responses in the customer support system"@en ;
+     skos:related :Inference, :Service ;
+     skos:altLabel "Языковая модель"@ru, "ИИ"@ru, "Language model"@en, "AI"@en .
+
+core:Encoder skos:definition "Энкодер - модель для преобразования текста в векторные представления"@ru ,
+                       "Encoder - model for converting text into vector representations"@en ;
+         skos:example "Энкодер, создающий 768-мерные эмбеддинги для чанков текста"@ru ,
+                      "Encoder creating 768-dimensional embeddings for text chunks"@en ;
+         skos:related :Inference, :Service ;
+         skos:altLabel "Векторизатор"@ru, "Эмбеддер"@ru, "Vectorizer"@en, "Embedder"@en .
+
+core:Service skos:definition "Сервис - программный компонент, выполняющий определенную функцию в системе"@ru ,
+                       "Service - software component performing a specific function in the system"@en ;
+         skos:example "Сервис IngestionService для загрузки и обработки новых документов"@ru ,
+                      "IngestionService for uploading and processing new documents"@en ;
+         skos:related :Agent, :LLM, :Encoder ;
+         skos:altLabel "Микросервис"@ru, "API"@ru, "Компонент"@ru, "Microservice"@en, "Component"@en .
+
+core:Organization skos:definition "Организация - компания или проект, представленный в системе"@ru ,
+                           "Organization - company or project represented in the system"@en ;
+             skos:example "Организация 'LoreCore Inc.' с 3 отделами и 25 сотрудниками"@ru ,
+                          "Organization 'LoreCore Inc.' with 3 departments and 25 employees"@en ;
+             skos:related :Account, :Agent ;
+             skos:altLabel "Компания"@ru, "Проект"@ru, "Company"@en, "Project"@en .
+
+core:User skos:definition "Пользователь - человек, взаимодействующий с системой"@ru ,
+                    "User - human interacting with the system"@en ;
+      skos:example "Пользователь Anna с ролью 'Менеджер' и навыками работы с CRM"@ru ,
+                   "User Anna with role 'Manager' and CRM operation skills"@en ;
+      skos:broader <http://schema.org/Person> ;
+      skos:related :Agent ;
+      skos:altLabel "Человек"@ru, "Клиент"@ru, "Person"@en, "Client"@en .
+
+core:Reactions skos:definition "Реакции - набор эмоциональных или функциональных откликов на сообщение"@ru ,
+                         "Reactions - set of emotional or functional responses to a message"@en ;
+           skos:example "Реакции на сообщение: 5 лайков, 2 дизлайка, 1 флаг 'Важно'"@ru ,
+                        "Reactions to a message: 5 likes, 2 dislikes, 1 'Important' flag"@en ;
+           skos:related :Message ;
+           skos:altLabel "Отклики"@ru, "Эмоции"@ru, "Responses"@en, "Emotions"@en .
+
+core:Modality skos:definition "Модальность - тип представления данных в системе"@ru ,
+                        "Modality - type of data representation in the system"@en ;
+          skos:example "Модальность 'Текст' для сообщений, 'Изображение' для вложений"@ru ,
+                       "Modality 'Text' for messages, 'Image' for attachments"@en ;
+          skos:related :Quant ;
+          skos:altLabel "Тип данных"@ru, "Формат"@ru, "Data type"@en, "Format"@en .
+
+
+
+##################################################################
+##################################################################
+##################################################################
+##################################################################
+
+## ОТНОШЕНИЯ И СВОЙСТВА ДАННЫХ
+
+#################################################################
+
+
+#################################################################
+#    Отношения базовых объектов и метаданных
+#################################################################
+
+core:fromAccount skos:definition "Указывает на аккаунт, к которому принадлежит объект"@ru ,
+                           "Indicates the account to which the object belongs"@en ;
+             skos:example "Документ 'Отчет.pdf' принадлежит аккаунту 'Company XYZ'"@ru ,
+                          "Document 'Report.pdf' belongs to account 'Company XYZ'"@en ;
+             skos:scope "Связывает Quant с Account, определяя принадлежность данных"@ru ,
+                        "Links Quant with Account, defining data ownership"@en .
+
+core:fromProject skos:definition "Указывает на проект, частью которого является объект"@ru ,
+                           "Indicates the project of which the object is a part"@en ;
+             skos:example "Документ 'Спецификация.docx' является частью проекта 'Разработка нового продукта'"@ru ,
+                          "Document 'Specification.docx' is part of the project 'New Product Development'"@en ;
+             skos:scope "Связывает Quant с Project, обеспечивая проектную организацию данных"@ru ,
+                        "Links Quant with Project, providing project-based data organization"@en .
+
+core:hasParent skos:definition "Указывает на родительский объект в иерархии"@ru ,
+                         "Indicates the parent object in a hierarchy"@en ;
+           skos:example "Чанк #5 имеет родительский объект Knowledge 'Техническая документация'"@ru ,
+                        "Chunk #5 has a parent object Knowledge 'Technical Documentation'"@en ;
+           skos:scope "Связывает объекты в иерархическую структуру, где один является родительским для другого"@ru ,
+                      "Links objects in a hierarchical structure where one is the parent of another"@en .
+
+:primaryModality skos:definition "Указывает основную модальность объекта (текст, аудио, видео и т.д.)"@ru ,
+                              "Indicates the primary modality of the object (text, audio, video, etc.)"@en ;
+                skos:example "Сообщение имеет первичную модальность 'Текст'"@ru ,
+                             "Message has primary modality 'Text'"@en ;
+                skos:scope "Связывает Quant с Modality, определяя основной тип представления данных"@ru ,
+                           "Links Quant with Modality, defining the main type of data representation"@en .
+
+core:secondaryModality skos:definition "Указывает дополнительную модальность объекта"@ru ,
+                                 "Indicates an additional modality of the object"@en ;
+                   skos:example "Сообщение с текстом имеет вторичную модальность 'Изображение' из-за прикрепленного файла"@ru ,
+                                "Text message has secondary modality 'Image' due to an attached file"@en ;
+                   skos:scope "Связывает Quant с Modality, определяя дополнительный тип представления данных"@ru ,
+                              "Links Quant with Modality, defining an additional type of data representation"@en .
+
+core:previousVersion skos:definition "Указывает на предыдущую версию объекта"@ru ,
+                              "Indicates the previous version of the object"@en ;
+                skos:example "Документ 'Договор_v2.doc' имеет предыдущую версию 'Договор_v1.doc'"@ru ,
+                             "Document 'Contract_v2.doc' has previous version 'Contract_v1.doc'"@en ;
+                skos:scope "Связывает версии одного объекта, обеспечивая историю изменений"@ru ,
+                           "Links versions of the same object, providing change history"@en .
+
+core:hasVersion skos:definition "Связывает объект с его версиями"@ru ,
+                          "Links an object with its versions"@en ;
+            skos:example "Проект 'Маркетинговая кампания' имеет версии 'v1', 'v2', 'final'"@ru ,
+                         "Project 'Marketing Campaign' has versions 'v1', 'v2', 'final'"@en ;
+            skos:scope "Связывает объект со всеми его версиями, включая текущую и предыдущие"@ru ,
+                       "Links an object with all its versions, including current and previous ones"@en .
+
+core:precedes skos:definition "Указывает на хронологический порядок объектов"@ru ,
+                        "Indicates the chronological order of objects"@en ;
+          skos:example "Сообщение #1 предшествует сообщению #2 в хронологическом порядке"@ru ,
+                       "Message #1 precedes Message #2 in chronological order"@en ;
+          skos:scope "Общее свойство для определения последовательности любых объектов во времени"@ru ,
+                     "General property for defining the sequence of any objects in time"@en .
+
+#################################################################
+#    Отношения агентов
+#################################################################
+
+core:agentNature skos:definition "Указывает на природу агента (пользователь или сервис)"@ru ,
+                           "Indicates the nature of the agent (user or service)"@en ;
+             skos:example "Агент 'Бот поддержки' имеет природу 'Service'"@ru ,
+                          "Agent 'Support Bot' has nature 'Service'"@en ;
+             skos:scope "Связывает Agent с User или Service, определяя базовый тип агента"@ru ,
+                        "Links Agent with User or Service, defining the basic type of agent"@en .
+
+core:agentRole skos:definition "Указывает на роль агента в системе"@ru ,
+                         "Indicates the role of the agent in the system"@en ;
+           skos:example "Агент 'Иван Петров' имеет роль 'Менеджер проекта'"@ru ,
+                        "Agent 'John Smith' has role 'Project Manager'"@en ;
+           skos:scope "Связывает Agent с Role, определяя функциональную позицию агента"@ru ,
+                      "Links Agent with Role, defining the functional position of the agent"@en .
+
+core:agentContacts skos:definition "Указывает на контактные данные агента"@ru ,
+                             "Indicates the contact information of the agent"@en ;
+               skos:example "Агент 'Мария' имеет контакты: email=maria@example.com, телефон=+7-123-456-7890"@ru ,
+                            "Agent 'Maria' has contacts: email=maria@example.com, phone=+7-123-456-7890"@en ;
+               skos:scope "Связывает Agent с Contact, обеспечивая доступ к контактной информации"@ru ,
+                          "Links Agent with Contact, providing access to contact information"@en .
+
+core:agentPolicy skos:definition "Указывает на стратегию агента"@ru ,
+                           "Indicates the policy of the agent"@en ;
+             skos:example "Бот поддержки использует политику 'Приоритет клиента', определяющую его поведение"@ru ,
+                          "Support bot uses the 'Customer Priority' policy that defines its behavior"@en ;
+             skos:scope "Связывает Agent с Policy, определяя правила поведения и принятия решений"@ru ,
+                        "Links Agent with Policy, defining rules of behavior and decision making"@en .
+
+core:hasSkill skos:definition "Указывает на навык или способность агента"@ru ,
+                        "Indicates a skill or capability of the agent"@en ;
+          skos:example "Агент 'Алексей' обладает навыком 'Программирование на Python' с уровнем 'Эксперт'"@ru ,
+                       "Agent 'Alex' has the skill 'Python Programming' with level 'Expert'"@en ;
+          skos:scope "Связывает Agent с Skill, определяя функциональные возможности агента"@ru ,
+                     "Links Agent with Skill, defining the functional capabilities of the agent"@en .
+
+core:specializedIn skos:definition "Указывает на область специализации агента"@ru ,
+                             "Indicates the specialization area of the agent"@en ;
+               skos:example "Агент 'Эксперт по ИИ' специализируется в домене 'Машинное обучение'"@ru ,
+                            "Agent 'AI Expert' is specialized in the domain 'Machine Learning'"@en ;
+               skos:scope "Связывает Agent с Domain, определяя экспертную область агента"@ru ,
+                          "Links Agent with Domain, defining the expert area of the agent"@en .
+
+#################################################################
+#    Отношения сообщений и тредов
+#################################################################
+
+core:postedBy skos:definition "Указывает, кто отправил сообщение или документ"@ru ,
+                        "Indicates who sent the message or document"@en ;
+          skos:example "Сообщение 'Нужна помощь с настройкой' отправлено агентом 'Клиент123'"@ru ,
+                       "Message 'Need help with setup' was posted by agent 'Client123'"@en ;
+          skos:scope "Связывает Message или Document с Agent, определяя авторство"@ru ,
+                     "Links Message or Document with Agent, defining authorship"@en .
+
+core:createdBy skos:definition "Указывает, кто создал объект"@ru ,
+                         "Indicates who created the object"@en ;
+           skos:example "Документ 'Отчет.pdf' создан агентом 'Аналитик'"@ru ,
+                        "Document 'Report.pdf' was created by agent 'Analyst'"@en ;
+           skos:scope "Связывает Document с Agent, определяя создателя документа, в отличие от отправителя"@ru ,
+                      "Links Document with Agent, defining the creator of the document, as opposed to the sender"@en .
+
+core:fromThread skos:definition "Указывает на тред, к которому принадлежит сообщение"@ru ,
+                          "Indicates the thread to which the message belongs"@en ;
+            skos:example "Сообщение 'Спасибо за помощь!' принадлежит треду 'Техподдержка #12345'"@ru ,
+                         "Message 'Thanks for the help!' belongs to thread 'Support #12345'"@en ;
+            skos:scope "Связывает Message с Thread, определяя принадлежность к диалогу"@ru ,
+                       "Links Message with Thread, defining membership in a dialogue"@en .
+
+core:replyTo skos:definition "Указывает на сообщение, на которое данное сообщение является ответом"@ru ,
+                       "Indicates the message to which this message is a reply"@en ;
+         skos:example "Сообщение 'Проблема решена' является ответом на сообщение 'У меня не работает приложение'"@ru ,
+                      "Message 'Problem solved' is a reply to message 'My application is not working'"@en ;
+         skos:scope "Связывает Message с другим Message, определяя структуру диалога"@ru ,
+                    "Links Message with another Message, defining dialogue structure"@en .
+
+core:precedesInThread skos:definition "Указывает на хронологический порядок сообщений в треде"@ru ,
+                               "Indicates the chronological order of messages in a thread"@en ;
+                 skos:example "Сообщение 'Здравствуйте!' предшествует в треде сообщению 'Чем могу помочь?'"@ru ,
+                              "Message 'Hello!' precedes in thread the message 'How can I help?'"@en ;
+                 skos:scope "Связывает Message с другим Message, определяя временную последовательность в треде"@ru ,
+                            "Links Message with another Message, defining temporal sequence in a thread"@en .
+
+core:followsInThread skos:definition "Указывает, что сообщение следует за другим сообщением в треде"@ru ,
+                              "Indicates that the message follows another message in a thread"@en ;
+                skos:example "Сообщение 'Чем могу помочь?' следует в треде за сообщением 'Здравствуйте!'"@ru ,
+                             "Message 'How can I help?' follows in thread the message 'Hello!'"@en ;
+                skos:scope "Обратное свойство к precedesInThread, связывает Message с предыдущим Message"@ru ,
+                           "Inverse property to precedesInThread, links Message with previous Message"@en .
+
+core:containsQA skos:definition "Связывает тред с QA-парами, которые в нем содержатся"@ru ,
+                          "Links a thread with QA pairs it contains"@en ;
+            skos:example "Тред поддержки содержит 3 пары вопрос-ответ по теме 'Установка программы'"@ru ,
+                         "Support thread contains 3 question-answer pairs on the topic 'Program Installation'"@en ;
+            skos:scope "Связывает Thread с QAPair, определяя структуру знаний в треде"@ru ,
+                       "Links Thread with QAPair, defining knowledge structure in a thread"@en .
+
+core:partOfThread skos:definition "Указывает, что QA-пара является частью треда"@ru ,
+                            "Indicates that a QA pair is part of a thread"@en ;
+              skos:example "Пара вопрос-ответ о 'Сбросе пароля' является частью треда поддержки #5678"@ru ,
+                           "Question-answer pair about 'Password Reset' is part of support thread #5678"@en ;
+              skos:scope "Обратное свойство к containsQA, связывает QAPair с Thread"@ru ,
+                         "Inverse property to containsQA, links QAPair with Thread"@en .
+
+core:hasReactions skos:definition "Связывает сообщение с реакциями на него"@ru ,
+                            "Links a message with reactions to it"@en ;
+              skos:example "Сообщение 'Отличная новость!' имеет реакции: 5 👍, 2 ❤️, 1 🎉"@ru ,
+                           "Message 'Great news!' has reactions: 5 👍, 2 ❤️, 1 🎉"@en ;
+              skos:scope "Связывает Message с Reactions, отражая обратную связь на сообщение"@ru ,
+                         "Links Message with Reactions, reflecting feedback on the message"@en .
+
+core:media skos:definition "Указывает на медиа-канал, в котором находится сообщение или тред"@ru ,
+                     "Indicates the media channel where the message or thread is located"@en ;
+       skos:example "Тред клиентской поддержки находится в медиа 'Telegram-чат'"@ru ,
+                    "Customer support thread is in media 'Telegram chat'"@en ;
+       skos:scope "Связывает Message или Thread с Media, определяя канал коммуникации"@ru ,
+                  "Links Message or Thread with Media, defining the communication channel"@en .
+
+core:streamed skos:definition "Указывает на дублирование треда в другом медиа"@ru ,
+                        "Indicates the duplication of a thread in another media"@en ;
+          skos:example "Тред из Telegram дублируется (стримится) в CRM-систему компании"@ru ,
+                       "Thread from Telegram is duplicated (streamed) to the company's CRM system"@en ;
+          skos:scope "Связывает Thread с Media, определяя каналы синхронизации"@ru ,
+                     "Links Thread with Media, defining synchronization channels"@en .
+
+core:attachment skos:definition "Связывает сообщение с прикрепленным документом"@ru ,
+                          "Links a message with an attached document"@en ;
+            skos:example "К сообщению 'Вот отчет за месяц' прикреплен документ 'Отчет_Май_2025.xlsx'"@ru ,
+                         "Document 'Report_May_2025.xlsx' is attached to message 'Here is the monthly report'"@en ;
+            skos:scope "Связывает Message с Document, определяя вложения"@ru ,
+                       "Links Message with Document, defining attachments"@en .
+
+#################################################################
+#    Отношения документов и знаний
+#################################################################
+
+core:documentType skos:definition "Указывает на тип документа"@ru ,
+                           "Indicates the document type"@en ;
+              skos:example "Документ 'Контракт.pdf' имеет тип 'Юридический документ' с MIME-типом application/pdf"@ru ,
+                           "Document 'Contract.pdf' has type 'Legal Document' with MIME-type application/pdf"@en ;
+              skos:scope "Связывает Document с DocumentType, определяя формат и семантику документа"@ru ,
+                         "Links Document with DocumentType, defining the format and semantics of the document"@en .
+
+core:originKnowledge skos:definition "Указывает на исходный объект знания для чанка"@ru ,
+                              "Indicates the original knowledge object for a chunk"@en ;
+                 skos:example "Чанк #7 происходит из документа знаний 'Руководство пользователя.pdf'"@ru ,
+                              "Chunk #7 originates from knowledge document 'User Manual.pdf'"@en ;
+                 skos:scope "Связывает Chunk с Knowledge, определяя источник фрагмента"@ru ,
+                            "Links Chunk with Knowledge, defining the source of the fragment"@en .
+
+core:originObject skos:definition "Указывает на исходный объект для аугментации"@ru ,
+                            "Indicates the source object for augmentation"@en ;
+              skos:example "Аугментация 'Ключевые идеи' создана на основе документа 'Стратегический план.docx'"@ru ,
+                           "Augmentation 'Key Ideas' was created based on document 'Strategic Plan.docx'"@en ;
+              skos:scope "Связывает Augmentation с Quant, определяя источник для обогащения"@ru ,
+                         "Links Augmentation with Quant, defining the source for enrichment"@en .
+
+core:chunkNumber skos:definition "Указывает порядковый номер чанка в последовательности"@ru ,
+                           "Indicates the sequence number of a chunk"@en ;
+             skos:example "Чанк имеет номер 3 из 15 в документе 'Техническая спецификация'"@ru ,
+                          "Chunk has number 3 out of 15 in document 'Technical Specification'"@en ;
+             skos:scope "Определяет позицию Chunk в последовательности фрагментов документа"@ru ,
+                        "Defines the position of Chunk in the sequence of document fragments"@en .
+
+#################################################################
+#    Отношения инференса
+#################################################################
+
+core:hasIntention skos:definition "Связывает сообщение с выявленным намерением"@ru ,
+                            "Links a message with an identified intention"@en ;
+              skos:example "Сообщение 'Как мне сбросить пароль?' имеет намерение 'Запрос помощи'"@ru ,
+                           "Message 'How do I reset my password?' has intention 'Help Request'"@en ;
+              skos:scope "Связывает Message с Intention, определяя цель сообщения"@ru ,
+                         "Links Message with Intention, defining the purpose of the message"@en .
+
+core:hasSentiment skos:definition "Связывает сообщение с определенной тональностью"@ru ,
+                            "Links a message with an identified sentiment"@en ;
+              skos:example "Сообщение 'Спасибо за отличный сервис!' имеет тональность 'Позитивная' с оценкой 0.92"@ru ,
+                           "Message 'Thank you for the excellent service!' has sentiment 'Positive' with score 0.92"@en ;
+              skos:scope "Связывает Message с Sentiment, определяя эмоциональную окраску"@ru ,
+                         "Links Message with Sentiment, defining the emotional tone"@en .
+
+core:hasTopic skos:definition "Указывает на тему объекта"@ru ,
+                        "Indicates the topic of an object"@en ;
+          skos:example "QA-пара о сбросе пароля имеет тему 'Безопасность аккаунта'"@ru ,
+                       "QA pair about password reset has topic 'Account Security'"@en ;
+          skos:scope "Связывает Augmentation или QAPair с Topic, определяя предметную область"@ru ,
+                     "Links Augmentation or QAPair with Topic, defining the subject area"@en .
+
+core:hasDomain skos:definition "Указывает на домен или область знаний объекта"@ru ,
+                         "Indicates the domain or knowledge area of an object"@en ;
+           skos:example "Тема 'Нейронные сети' относится к домену 'Искусственный интеллект'"@ru ,
+                        "Topic 'Neural Networks' belongs to domain 'Artificial Intelligence'"@en ;
+           skos:scope "Связывает Topic, Category или Augmentation с Domain, определяя область знаний"@ru ,
+                      "Links Topic, Category or Augmentation with Domain, defining the knowledge area"@en .
+
+core:hasSubDomain skos:definition "Связывает домен с его поддоменами"@ru ,
+                            "Links a domain with its subdomains"@en ;
+              skos:example "Домен 'Машинное обучение' имеет поддомены 'Нейронные сети', 'Кластеризация', 'Регрессия'"@ru ,
+                           "Domain 'Machine Learning' has subdomains 'Neural Networks', 'Clustering', 'Regression'"@en ;
+              skos:scope "Связывает Domain с другими Domain, определяя иерархию областей знаний"@ru ,
+                         "Links Domain with other Domains, defining a hierarchy of knowledge areas"@en .
+
+core:subDomainOf skos:definition "Указывает на родительский домен для поддомена"@ru ,
+                           "Indicates the parent domain for a subdomain"@en ;
+             skos:example "Домен 'Глубокое обучение' является поддоменом 'Машинного обучения'"@ru ,
+                          "Domain 'Deep Learning' is a subdomain of 'Machine Learning'"@en ;
+             skos:scope "Обратное свойство к hasSubDomain, связывает Domain с родительским Domain"@ru ,
+                        "Inverse property to hasSubDomain, links Domain with parent Domain"@en .
+
+core:keyWord skos:definition "Связывает объект с ключевым словом"@ru ,
+                       "Links an object with a keyword"@en ;
+         skos:example "Документ о машинном обучении содержит ключевые слова 'нейронная сеть', 'алгоритм', 'данные'"@ru ,
+                      "Machine learning document contains keywords 'neural network', 'algorithm', 'data'"@en ;
+         skos:scope "Связывает Augmentation или Chunk с Keyword, определяя важные термины"@ru ,
+                    "Links Augmentation or Chunk with Keyword, defining important terms"@en .
+
+core:keyFact skos:definition "Связывает объект с ключевым фактом"@ru ,
+                       "Links an object with a key fact"@en ;
+         skos:example "Документ о компании содержит ключевой факт 'Основана в 2020 году с начальным капиталом $1M'"@ru ,
+                      "Company document contains key fact 'Founded in 2020 with initial capital of $1M'"@en ;
+         skos:scope "Связывает Augmentation или Chunk с KeyFact, определяя важную фактическую информацию"@ru ,
+                    "Links Augmentation or Chunk with KeyFact, defining important factual information"@en .
+
+core:hasSummary skos:definition "Связывает объект с его суммаризацией"@ru ,
+                          "Links an object with its summarization"@en ;
+            skos:example "Длинный технический документ имеет суммаризацию из 3 абзацев, выделяющую ключевые моменты"@ru ,
+                         "Long technical document has a 3-paragraph summarization highlighting key points"@en ;
+            skos:scope "Связывает Document, Thread, QAPair или Knowledge с Summarisation, предоставляя краткий обзор"@ru ,
+                       "Links Document, Thread, QAPair or Knowledge with Summarisation, providing a brief overview"@en .
+
+core:inferenceMethod skos:definition "Указывает на метод, использованный для получения вывода"@ru ,
+                              "Indicates the method used to obtain the inference"@en ;
+                 skos:example "Суммаризация документа получена с помощью LLM-модели 'SummarizeBot-3B'"@ru ,
+                              "Document summarization was obtained using LLM model 'SummarizeBot-3B'"@en ;
+                 skos:scope "Связывает Inference с LLM, Encoder или Service, определяя алгоритм анализа"@ru ,
+                            "Links Inference with LLM, Encoder or Service, defining the analysis algorithm"@en .
+
+core:appliesTo skos:definition "Указывает, к какому объекту применяется инференс"@ru ,
+                         "Indicates to which object the inference applies"@en ;
+           skos:example "Анализ тональности применяется к сообщению 'Спасибо за помощь!'"@ru ,
+                        "Sentiment analysis applies to message 'Thank you for your help!'"@en ;
+           skos:scope "Связывает Inference с Quant, определяя объект анализа"@ru ,
+                      "Links Inference with Quant, defining the object of analysis"@en .
+
+core:generatedBy skos:definition "Указывает, кто или что сгенерировало аугментацию"@ru ,
+                           "Indicates who or what generated the augmentation"@en ;
+             skos:example "Аугментация 'Ключевые идеи' сгенерирована агентом 'AnalysisBot'"@ru ,
+                          "Augmentation 'Key Ideas' was generated by agent 'AnalysisBot'"@en ;
+             skos:scope "Связывает Augmentation с Agent, определяя источник обогащения"@ru ,
+                        "Links Augmentation with Agent, defining the source of enrichment"@en .
+
+#################################################################
+#    Отношения QA-пар и оценки
+#################################################################
+
+core:hasQuestion skos:definition "Связывает QA-пару с сообщением-вопросом"@ru ,
+                           "Links a QA pair with a question message"@en ;
+             skos:example "QA-пара #123 содержит вопрос 'Как изменить пароль в системе?'"@ru ,
+                          "QA pair #123 contains the question 'How do I change my password in the system?'"@en ;
+             skos:scope "Связывает QAPair с Message типа 'вопрос', определяя первую часть пары"@ru ,
+                        "Links QAPair with Message of type 'question', defining the first part of the pair"@en .
+
+core:hasAnswer skos:definition "Связывает QA-пару с сообщением-ответом"@ru ,
+                         "Links a QA pair with an answer message"@en ;
+           skos:example "QA-пара #123 содержит ответ с пошаговой инструкцией по изменению пароля"@ru ,
+                        "QA pair #123 contains an answer with step-by-step instructions for changing a password"@en ;
+           skos:scope "Связывает QAPair с Message типа 'ответ', определяя вторую часть пары"@ru ,
+                      "Links QAPair with Message of type 'answer', defining the second part of the pair"@en .
+
+core:evaluation skos:definition "Связывает QA-пару с оценкой ответа"@ru ,
+                          "Links a QA pair with answer evaluation"@en ;
+            skos:example "QA-пара #123 имеет оценку с accuracyScore=0.95, completenessScore=0.87"@ru ,
+                         "QA pair #123 has evaluation with accuracyScore=0.95, completenessScore=0.87"@en ;
+            skos:scope "Связывает QAPair с Evaluation, определяя качество ответа"@ru ,
+                       "Links QAPair with Evaluation, defining the quality of the answer"@en .
+
+
+#################################################################
+#    Отношения проектов, статусов и описаний
+#################################################################
+
+core:hasName skos:definition "Указывает имя или название объекта"@ru ,
+                       "Indicates the name or title of an object"@en ;
+         skos:example "Проект имеет название 'Модернизация IT-инфраструктуры'"@ru ,
+                      "Project has name 'IT Infrastructure Modernization'"@en ;
+         skos:scope "Связывает Agent, Project, Unit или Organization с их названием"@ru ,
+                    "Links Agent, Project, Unit or Organization with their name"@en .
+
+core:hasDescription skos:definition "Связывает объект с его текстовым описанием"@ru ,
+                             "Links an object with its textual description"@en ;
+               skos:example "Товар 'Смартфон X' имеет подробное описание характеристик и возможностей"@ru ,
+                            "Product 'Smartphone X' has a detailed description of features and capabilities"@en ;
+               skos:scope "Связывает Agent или Unit с Description, предоставляя детальную информацию"@ru ,
+                          "Links Agent or Unit with Description, providing detailed information"@en .
+
+core:hasStatus skos:definition "Указывает на статус объекта"@ru ,
+                         "Indicates the status of an object"@en ;
+           skos:example "Проект имеет статус 'В разработке' с прогрессом 60%"@ru ,
+                        "Project has status 'In Development' with 60% progress"@en ;
+           skos:scope "Связывает Project или Unit с Status, определяя текущее состояние"@ru ,
+                      "Links Project or Unit with Status, defining the current state"@en .
+
+core:hasGoal skos:definition "Указывает цель проекта"@ru ,
+                       "Indicates the goal of a project"@en ;
+         skos:example "Проект имеет цель 'Увеличить конверсию сайта на 15% к концу квартала'"@ru ,
+                      "Project has goal 'Increase website conversion by 15% by the end of the quarter'"@en ;
+         skos:scope "Связывает Project с его целью в формате SMART"@ru ,
+                    "Links Project with its goal in SMART format"@en .
+
+core:hasPrice skos:definition "Указывает цену товара или услуги"@ru ,
+                        "Indicates the price of a product or service"@en ;
+          skos:example "Товар 'Профессиональная консультация' имеет цену 5000 рублей"@ru ,
+                       "Product 'Professional Consultation' has price $100"@en ;
+          skos:scope "Связывает Unit с его стоимостью"@ru ,
+                     "Links Unit with its cost"@en .
+
+core:startedAt skos:definition "Указывает дату начала проекта"@ru ,
+                         "Indicates the start date of a project"@en ;
+           skos:example "Проект 'Ребрендинг' начат 2025-03-15"@ru ,
+                        "Project 'Rebranding' started on 2025-03-15"@en ;
+           skos:scope "Связывает Project с датой фактического начала работ"@ru ,
+                      "Links Project with the actual work start date"@en .
+
+core:dueDate skos:definition "Указывает крайний срок выполнения проекта"@ru ,
+                       "Indicates the deadline for project completion"@en ;
+         skos:example "Проект 'Запуск нового сайта' имеет дедлайн 2025-06-30"@ru ,
+                      "Project 'New Website Launch' has deadline 2025-06-30"@en ;
+         skos:scope "Связывает Project с датой планируемого завершения"@ru ,
+                    "Links Project with the planned completion date"@en .
+
+#################################################################
+#    Технические отношения
+#################################################################
+
+core:link skos:definition "Указывает ссылку или адрес объекта"@ru ,
+                    "Indicates the link or address of an object"@en ;
+      skos:example "Документ имеет ссылку 'https://example.com/docs/report.pdf'"@ru ,
+                   "Document has link 'https://example.com/docs/report.pdf'"@en ;
+      skos:scope "Связывает Document, Knowledge или Message с их URL или физическим адресом"@ru ,
+                 "Links Document, Knowledge or Message with their URL or physical address"@en .
+
+core:storage skos:definition "Указывает хранилище, где находится документ"@ru ,
+                       "Indicates the storage where the document is located"@en ;
+         skos:example "Документ хранится в 'AWS S3 Bucket: company-docs'"@ru ,
+                      "Document is stored in 'AWS S3 Bucket: company-docs'"@en ;
+         skos:scope "Связывает Document с информацией о его физическом или облачном хранилище"@ru ,
+                    "Links Document with information about its physical or cloud storage"@en .
+
+core:fileName skos:definition "Указывает имя файла документа"@ru ,
+                        "Indicates the filename of a document"@en ;
+          skos:example "Документ имеет имя файла 'Финансовый_отчет_Q1_2025.xlsx'"@ru ,
+                       "Document has filename 'Financial_Report_Q1_2025.xlsx'"@en ;
+          skos:scope "Связывает Document или Knowledge с именем файла на диске или в хранилище"@ru ,
+                     "Links Document or Knowledge with the filename on disk or in storage"@en .
+
+core:fileHash skos:definition "Указывает хеш-сумму файла для проверки целостности"@ru ,
+                        "Indicates the file hash for integrity verification"@en ;
+          skos:example "Документ имеет SHA-256 хеш '8a7b5c3d2e1f...'"@ru ,
+                       "Document has SHA-256 hash '8a7b5c3d2e1f...'"@en ;
+          skos:scope "Связывает Document или Knowledge с криптографической хеш-суммой файла"@ru ,
+                     "Links Document or Knowledge with the cryptographic hash sum of the file"@en .
+
+core:size skos:definition "Указывает размер документа"@ru ,
+                    "Indicates the size of a document"@en ;
+      skos:example "Документ имеет размер 2.5 MB"@ru ,
+                   "Document has size 2.5 MB"@en ;
+      skos:scope "Связывает Document с информацией о его размере в байтах"@ru ,
+                 "Links Document with information about its size in bytes"@en .
+
+core:encoding skos:definition "Указывает кодировку документа"@ru ,
+                        "Indicates the encoding of a document"@en ;
+          skos:example "Текстовый документ имеет кодировку 'UTF-8'"@ru ,
+                       "Text document has encoding 'UTF-8'"@en ;
+          skos:scope "Связывает Document с информацией о его кодировке символов"@ru ,
+                     "Links Document with information about its character encoding"@en .
+
+core:mimeType skos:definition "Указывает MIME-тип документа"@ru ,
+                        "Indicates the MIME type of a document"@en ;
+          skos:example "Документ имеет MIME-тип 'application/pdf'"@ru ,
+                       "Document has MIME type 'application/pdf'"@en ;
+          skos:scope "Связывает DocumentType с стандартным идентификатором формата"@ru ,
+                     "Links DocumentType with a standard format identifier"@en .
+
+core:apiEndpoint skos:definition "Указывает API-эндпоинт для взаимодействия с медиа"@ru ,
+                           "Indicates the API endpoint for media interaction"@en ;
+             skos:example "Медиа 'Telegram Bot' имеет API-эндпоинт 'https://api.telegram.org/bot123456789/'"@ru ,
+                          "Media 'Telegram Bot' has API endpoint 'https://api.telegram.org/bot123456789/'"@en ;
+             skos:scope "Связывает Media с URL для программного доступа"@ru ,
+                        "Links Media with URL for programmatic access"@en .
+
+core:vectorised skos:definition "Указывает на индекс объекта в векторном хранилище"@ru ,
+                          "Indicates the index of an object in a vector store"@en ;
+            skos:example "Чанк имеет векторный индекс 'vs:12345' в базе данных эмбеддингов"@ru ,
+                         "Chunk has vector index 'vs:12345' in the embeddings database"@en ;
+            skos:scope "Связывает Quant с идентификатором в векторной базе данных для семантического поиска"@ru ,
+                       "Links Quant with an identifier in a vector database for semantic search"@en .
+
+#################################################################
+#    Свойства данных оценки
+#################################################################
+
+core:accuracyScore skos:definition "Оценка точности ответа"@ru ,
+                             "Accuracy score of the answer"@en ;
+               skos:example "Ответ на вопрос о технических характеристиках имеет оценку точности 0.95"@ru ,
+                            "Answer to a question about technical specifications has accuracy score of 0.95"@en ;
+               skos:scope "Связывает Evaluation с числовой оценкой точности от 0.0 до 1.0"@ru ,
+                          "Links Evaluation with a numerical accuracy score from 0.0 to 1.0"@en .
+
+core:completenessScore skos:definition "Оценка полноты ответа"@ru ,
+                                 "Completeness score of the answer"@en ;
+                   skos:example "Ответ на комплексный вопрос имеет оценку полноты 0.87"@ru ,
+                                "Answer to a complex question has completeness score of 0.87"@en ;
+                   skos:scope "Связывает Evaluation с числовой оценкой полноты от 0.0 до 1.0"@ru ,
+                              "Links Evaluation with a numerical completeness score from 0.0 to 1.0"@en .
+
+core:relevanceScore skos:definition "Оценка релевантности ответа"@ru ,
+                              "Relevance score of the answer"@en ;
+                skos:example "Ответ на вопрос клиента имеет оценку релевантности 0.92"@ru ,
+                             "Answer to a customer question has relevance score of 0.92"@en ;
+                skos:scope "Связывает Evaluation с числовой оценкой релевантности от 0.0 до 1.0"@ru ,
+                           "Links Evaluation with a numerical relevance score from 0.0 to 1.0"@en .
+
+core:confidenceScore skos:definition "Уровень уверенности в результате вывода"@ru ,
+                               "Confidence level in the inference result"@en ;
+                 skos:example "Классификация темы сообщения имеет уровень уверенности 0.89"@ru ,
+                              "Message topic classification has confidence level of 0.89"@en ;
+                 skos:scope "Связывает Evaluation с числовой оценкой уверенности от 0.0 до 1.0"@ru ,
+                            "Links Evaluation with a numerical confidence score from 0.0 to 1.0"@en .
+
+core:hasScore skos:definition "Оценка уверенности в сентимент-анализе"@ru ,
+                        "Confidence score in sentiment analysis"@en ;
+          skos:example "Определение позитивной тональности сообщения имеет оценку 0.94"@ru ,
+                       "Determination of positive sentiment for a message has score of 0.94"@en ;
+          skos:scope "Связывает Sentiment с числовой оценкой уверенности от 0.0 до 1.0"@ru ,
+                     "Links Sentiment with a numerical confidence score from 0.0 to 1.0"@en .
+
+#################################################################
+#    Свойства данных агентов и аккаунтов
+#################################################################
+
+core:gender skos:definition "Гендерная характеристика агента"@ru ,
+                      "Gender characteristic of an agent"@en ;
+        skos:example "Агент имеет гендер 'female'"@ru ,
+                     "Agent has gender 'female'"@en ;
+        skos:scope "Связывает Agent с одним из значений: 'male', 'female', 'other'"@ru ,
+                   "Links Agent with one of the values: 'male', 'female', 'other'"@en .
+
+core:age skos:definition "Возраст агента"@ru ,
+                   "Age of an agent"@en ;
+     skos:example "Агент имеет возраст 34 года"@ru ,
+                  "Agent has age 34 years"@en ;
+     skos:scope "Связывает Agent с числовым значением возраста"@ru ,
+                "Links Agent with a numerical age value"@en .
+
+core:isActive skos:definition "Указывает, активен ли аккаунт или агент"@ru ,
+                        "Indicates whether an account or agent is active"@en ;
+          skos:example "Аккаунт 'Test Corp' имеет статус isActive=true"@ru ,
+                       "Account 'Test Corp' has status isActive=true"@en ;
+          skos:scope "Связывает Account или Agent с булевым значением активности"@ru ,
+                     "Links Account or Agent with a boolean activity value"@en .
+
+core:accountName skos:definition "Название аккаунта"@ru ,
+                           "Account name"@en ;
+             skos:example "Аккаунт имеет название 'Enterprise Solutions Inc.'"@ru ,
+                          "Account has name 'Enterprise Solutions Inc.'"@en ;
+             skos:scope "Связывает Account с строковым значением названия"@ru ,
+                        "Links Account with a string value of the name"@en .
+
+#################################################################
+#    Другие свойства данных
+#################################################################
+
+core:reuse skos:definition "Количество повторных использований QA-пары"@ru ,
+                     "Number of reuses of a QA pair"@en ;
+       skos:example "QA-пара о сбросе пароля имеет счетчик повторного использования 27"@ru ,
+                    "QA pair about password reset has reuse counter of 27"@en ;
+       skos:scope "Связывает QAPair с числовым значением количества переиспользований"@ru ,
+                  "Links QAPair with a numerical value of reuse count"@en .
+
+core:language skos:definition "Язык объекта"@ru ,
+                        "Language of an object"@en ;
+          skos:example "Документ имеет язык 'ru' (русский)"@ru ,
+                       "Document has language 'en' (English)"@en ;
+          skos:scope "Связывает Quant с кодом языка по стандарту ISO 639"@ru ,
+                     "Links Quant with language code according to ISO 639 standard"@en .
+
+core:accessLevel skos:definition "Уровень доступа к объекту"@ru ,
+                           "Access level to an object"@en ;
+             skos:example "Документ имеет уровень доступа 3 (только для менеджеров)"@ru ,
+                          "Document has access level 3 (for managers only)"@en ;
+             skos:scope "Связывает Quant с числовым значением уровня доступа от 0 до 6"@ru ,
+                        "Links Quant with a numerical access level value from 0 to 6"@en .
+
+core:createdAt skos:definition "Дата и время создания объекта"@ru ,
+                         "Date and time of object creation"@en ;
+           skos:example "Сообщение создано в 2025-05-01T14:30:25Z"@ru ,
+                        "Message was created at 2025-05-01T14:30:25Z"@en ;
+           skos:scope "Связывает Quant с временной меткой создания в формате ISO 8601"@ru ,
+                      "Links Quant with creation timestamp in ISO 8601 format"@en .
+
+core:updatedAt skos:definition "Дата и время последнего обновления объекта"@ru ,
+                         "Date and time of the last object update"@en ;
+           skos:example "Документ последний раз обновлен в 2025-05-03T09:15:42Z"@ru ,
+                        "Document was last updated at 2025-05-03T09:15:42Z"@en ;
+           skos:scope "Связывает Quant или Thread с временной меткой обновления в формате ISO 8601"@ru ,
+                      "Links Quant or Thread with update timestamp in ISO 8601 format"@en .
+
+core:lastUpdated skos:definition "Дата и время последнего обновления профиля"@ru ,
+                           "Date and time of the last profile update"@en ;
+             skos:example "Профиль пользователя последний раз обновлен в 2025-05-02T17:45:33Z"@ru ,
+                          "User profile was last updated at 2025-05-02T17:45:33Z"@en ;
+             skos:scope "Связывает Profile с временной меткой обновления в формате ISO 8601"@ru ,
+                        "Links Profile with update timestamp in ISO 8601 format"@en .
+
+core:version skos:definition "Версия объекта"@ru ,
+                       "Object version"@en ;
+         skos:example "Документ имеет версию 3"@ru ,
+                      "Document has version 3"@en ;
+         skos:scope "Связывает Quant с целочисленным значением версии"@ru ,
+                    "Links Quant with an integer version value"@en .
+
+core:jsonVersion skos:definition "Версия JSON-схемы объекта"@ru ,
+                           "Version of the object's JSON schema"@en ;
+             skos:example "Объект использует JSON-схему версии '1.0.3'"@ru ,
+                          "Object uses JSON schema version '1.0.3'"@en ;
+             skos:scope "Связывает Quant со строковым значением версии схемы"@ru ,
+                        "Links Quant with a string value of schema version"@en .
+
+core:processingStage skos:definition "Стадия обработки объекта"@ru ,
+                              "Processing stage of an object"@en ;
+                 skos:example "Документ находится в стадии обработки 'augmented'"@ru ,
+                              "Document is in processing stage 'augmented'"@en ;
+                 skos:scope "Связывает Quant со строковым значением стадии обработки"@ru ,
+                            "Links Quant with a string value of processing stage"@en .

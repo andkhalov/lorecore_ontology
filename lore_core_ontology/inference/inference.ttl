@@ -1,0 +1,379 @@
+@prefix : <https://lorecore.ai/ont/inference/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://lorecore.ai/ont/inference/> .
+
+<https://lorecore.ai/ont/inference> rdf:type owl:Ontology ;
+                                     owl:versionIRI <https://lorecore.ai/ont/inference#Inference/1.0.0> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/date
+<http://purl.org/dc/elements/1.1/date> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://lorecore.ai/ont/core.ttl#appliesTo
+<https://lorecore.ai/ont/core.ttl#appliesTo> rdf:type owl:ObjectProperty ;
+                                             rdfs:domain <https://lorecore.ai/ont/core.ttl#Inference> ;
+                                             rdfs:range <https://lorecore.ai/ont/core.ttl#Quant> ;
+                                             <http://purl.org/dc/elements/1.1/date> "2025-05-01T12:41:58Z"^^xsd:dateTime ;
+                                             rdfs:comment "Указывает, к какому объекту применяется инференс (например, к сообщению, документу и т.д.)"@ru ;
+                                             rdfs:label "appliesTo"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#evaluation
+<https://lorecore.ai/ont/core.ttl#evaluation> rdf:type owl:ObjectProperty ,
+                                                       owl:FunctionalProperty ;
+                                              rdfs:domain <https://lorecore.ai/ont/core.ttl#QAPair> ;
+                                              rdfs:range <https://lorecore.ai/ont/core.ttl#Evaluation> ;
+                                              <http://purl.org/dc/elements/1.1/date> "2025-04-25T05:39:46Z"^^xsd:dateTime ;
+                                              rdfs:comment "Указание на объект оценки"@ru ;
+                                              rdfs:label "evaluation"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#hasDomain
+<https://lorecore.ai/ont/core.ttl#hasDomain> rdf:type owl:ObjectProperty ;
+                                             rdfs:domain <https://lorecore.ai/ont/core.ttl#Augmentation> ,
+                                                         <https://lorecore.ai/ont/core.ttl#Category> ,
+                                                         <https://lorecore.ai/ont/core.ttl#Topic> ;
+                                             rdfs:range <https://lorecore.ai/ont/core.ttl#Domain> ;
+                                             <http://purl.org/dc/elements/1.1/date> "2025-04-25T05:33:53Z"^^xsd:dateTime ;
+                                             rdfs:comment "Область знаний к которой относится объект"@ru .
+
+
+###  https://lorecore.ai/ont/core.ttl#hasIntention
+<https://lorecore.ai/ont/core.ttl#hasIntention> rdf:type owl:ObjectProperty ;
+                                                rdfs:domain <https://lorecore.ai/ont/core.ttl#Message> ;
+                                                rdfs:range <https://lorecore.ai/ont/core.ttl#Intention> ;
+                                                <http://purl.org/dc/elements/1.1/date> "2025-04-25T04:51:42Z"^^xsd:dateTime ;
+                                                rdfs:comment "Указание на намерение, которое система считала в сообщении"@ru ;
+                                                rdfs:label "hasIntention"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#hasSentiment
+<https://lorecore.ai/ont/core.ttl#hasSentiment> rdf:type owl:ObjectProperty ,
+                                                         owl:FunctionalProperty ;
+                                                rdfs:domain <https://lorecore.ai/ont/core.ttl#Message> ;
+                                                rdfs:range <https://lorecore.ai/ont/core.ttl#Sentiment> ;
+                                                <http://purl.org/dc/elements/1.1/date> "2025-04-25T04:55:19Z"^^xsd:dateTime ;
+                                                rdfs:comment "У сообщения есть оценка тональности"@ru ;
+                                                rdfs:label "hasSentiment"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#hasSummary
+<https://lorecore.ai/ont/core.ttl#hasSummary> rdf:type owl:ObjectProperty ,
+                                                       owl:FunctionalProperty ;
+                                              rdfs:domain <https://lorecore.ai/ont/core.ttl#Augmentation> ,
+                                                          <https://lorecore.ai/ont/core.ttl#Document> ,
+                                                          <https://lorecore.ai/ont/core.ttl#Knowledge> ,
+                                                          <https://lorecore.ai/ont/core.ttl#QAPair> ,
+                                                          <https://lorecore.ai/ont/core.ttl#Thread> ;
+                                              rdfs:range <https://lorecore.ai/ont/core.ttl#Summarisation> ;
+                                              <http://purl.org/dc/elements/1.1/date> "2025-04-25T05:36:00Z"^^xsd:dateTime ;
+                                              rdfs:comment "Суммаризация объекта на естественном языке"@ru ;
+                                              rdfs:label "hasSummary"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#hasTopic
+<https://lorecore.ai/ont/core.ttl#hasTopic> rdf:type owl:ObjectProperty ,
+                                                     owl:FunctionalProperty ;
+                                            rdfs:domain <https://lorecore.ai/ont/core.ttl#Augmentation> ,
+                                                        <https://lorecore.ai/ont/core.ttl#QAPair> ;
+                                            rdfs:range <https://lorecore.ai/ont/core.ttl#Topic> ;
+                                            <http://purl.org/dc/elements/1.1/date> "2025-04-25T05:31:16Z"^^xsd:dateTime ;
+                                            rdfs:comment "Тема объекта, извлеченная LLM"@ru ;
+                                            rdfs:label "hasTopic"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#inferenceMethod
+<https://lorecore.ai/ont/core.ttl#inferenceMethod> rdf:type owl:ObjectProperty ,
+                                                            owl:FunctionalProperty ;
+                                                   rdfs:domain <https://lorecore.ai/ont/core.ttl#Inference> ;
+                                                   rdfs:range <https://lorecore.ai/ont/core.ttl#Encoder> ,
+                                                              <https://lorecore.ai/ont/core.ttl#LLM> ,
+                                                              <https://lorecore.ai/ont/core.ttl#Service> ;
+                                                   <http://purl.org/dc/elements/1.1/date> "2025-05-01T12:38:53Z"^^xsd:dateTime ;
+                                                   rdfs:comment "Связывает результат вывода с методом, который использовался для получения этого вывода"@ru ;
+                                                   rdfs:label "inferenceMethod"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#keyFact
+<https://lorecore.ai/ont/core.ttl#keyFact> rdf:type owl:ObjectProperty ,
+                                                    owl:TransitiveProperty ;
+                                           rdfs:domain <https://lorecore.ai/ont/core.ttl#Augmentation> ,
+                                                       <https://lorecore.ai/ont/core.ttl#Chunk> ;
+                                           rdfs:range <https://lorecore.ai/ont/core.ttl#KeyFact> ;
+                                           <http://purl.org/dc/elements/1.1/date> "2025-04-24T18:53:21Z"^^xsd:dateTime ;
+                                           rdfs:comment "Указание на ключевой факт, который извлекли из некоторого объекта"@ru ;
+                                           rdfs:label "keyFact"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#keyWord
+<https://lorecore.ai/ont/core.ttl#keyWord> rdf:type owl:ObjectProperty ,
+                                                    owl:TransitiveProperty ;
+                                           rdfs:domain <https://lorecore.ai/ont/core.ttl#Augmentation> ,
+                                                       <https://lorecore.ai/ont/core.ttl#Chunk> ;
+                                           rdfs:range <https://lorecore.ai/ont/core.ttl#Keyword> ;
+                                           <http://purl.org/dc/elements/1.1/date> "2025-04-24T18:50:43Z"^^xsd:dateTime ;
+                                           rdfs:comment "Ключевые слова объекта"@ru ;
+                                           rdfs:label "keyWord"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://lorecore.ai/ont/core.ttl#accuracyScore
+<https://lorecore.ai/ont/core.ttl#accuracyScore> rdf:type owl:DatatypeProperty ,
+                                                          owl:FunctionalProperty ;
+                                                 rdfs:domain <https://lorecore.ai/ont/core.ttl#Evaluation> ;
+                                                 rdfs:range xsd:decimal ;
+                                                 <http://purl.org/dc/elements/1.1/date> "2025-05-01T18:03:39Z"^^xsd:dateTime ;
+                                                 rdfs:comment "Оценка точности ответа"@ru ;
+                                                 rdfs:label "accuracyScore"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#completenessScore
+<https://lorecore.ai/ont/core.ttl#completenessScore> rdf:type owl:DatatypeProperty ,
+                                                              owl:FunctionalProperty ;
+                                                     rdfs:domain <https://lorecore.ai/ont/core.ttl#Evaluation> ;
+                                                     rdfs:range xsd:decimal ;
+                                                     <http://purl.org/dc/elements/1.1/date> "2025-05-01T18:10:02Z"^^xsd:dateTime ;
+                                                     rdfs:comment "Оценка полноты ответа"@ru ;
+                                                     rdfs:label "completenessScore"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#confidenceScore
+<https://lorecore.ai/ont/core.ttl#confidenceScore> rdf:type owl:DatatypeProperty ,
+                                                            owl:FunctionalProperty ;
+                                                   rdfs:domain <https://lorecore.ai/ont/core.ttl#Evaluation> ;
+                                                   rdfs:range xsd:decimal ;
+                                                   <http://purl.org/dc/elements/1.1/date> "2025-05-01T18:15:01Z"^^xsd:dateTime ;
+                                                   rdfs:comment "Уровень уверенности в результате вывода"@ru ;
+                                                   rdfs:label "confidenceScore"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#hasScore
+<https://lorecore.ai/ont/core.ttl#hasScore> rdf:type owl:DatatypeProperty ,
+                                                     owl:FunctionalProperty ;
+                                            rdfs:domain <https://lorecore.ai/ont/core.ttl#Sentiment> ;
+                                            rdfs:range xsd:decimal ;
+                                            <http://purl.org/dc/elements/1.1/date> "2025-04-25T04:58:16Z"^^xsd:dateTime ;
+                                            rdfs:comment "Насколько модель уверенна в предсказании (от 0 до 1)"@ru ;
+                                            rdfs:label "hasScore" .
+
+
+###  https://lorecore.ai/ont/core.ttl#relevanceScore
+<https://lorecore.ai/ont/core.ttl#relevanceScore> rdf:type owl:DatatypeProperty ,
+                                                           owl:FunctionalProperty ;
+                                                  rdfs:domain <https://lorecore.ai/ont/core.ttl#Evaluation> ;
+                                                  rdfs:range xsd:decimal ;
+                                                  <http://purl.org/dc/elements/1.1/date> "2025-05-01T18:11:34Z"^^xsd:dateTime ;
+                                                  rdfs:comment "Оценка релевантности ответа"@ru ;
+                                                  rdfs:label "relevanceScore"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://lorecore.ai/ont/core.ttl#Augmentation
+<https://lorecore.ai/ont/core.ttl#Augmentation> rdf:type owl:Class ;
+                                                rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty <https://lorecore.ai/ont/core.ttl#hasDomain> ;
+                                                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                  owl:onClass <https://lorecore.ai/ont/core.ttl#Domain>
+                                                                ] ,
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty <https://lorecore.ai/ont/core.ttl#hasTopic> ;
+                                                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                  owl:onClass <https://lorecore.ai/ont/core.ttl#Topic>
+                                                                ] ,
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty <https://lorecore.ai/ont/core.ttl#hasSummary> ;
+                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                  owl:onClass <https://lorecore.ai/ont/core.ttl#Summarisation>
+                                                                ] .
+
+
+###  https://lorecore.ai/ont/core.ttl#Category
+<https://lorecore.ai/ont/core.ttl#Category> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Chunk
+<https://lorecore.ai/ont/core.ttl#Chunk> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Document
+<https://lorecore.ai/ont/core.ttl#Document> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Domain
+<https://lorecore.ai/ont/core.ttl#Domain> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Encoder
+<https://lorecore.ai/ont/core.ttl#Encoder> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Evaluation
+<https://lorecore.ai/ont/core.ttl#Evaluation> rdf:type owl:Class ;
+                                              rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Inference> ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <https://lorecore.ai/ont/core.ttl#accuracyScore> ;
+                                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:decimal ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive 0.0
+                                                                                                         ]
+                                                                                                         [ xsd:maxInclusive 1.0
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                              ] ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <https://lorecore.ai/ont/core.ttl#completenessScore> ;
+                                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:decimal ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive 0.0
+                                                                                                         ]
+                                                                                                         [ xsd:maxInclusive 1.0
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                              ] ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <https://lorecore.ai/ont/core.ttl#confidenceScore> ;
+                                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:decimal ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive 0.0
+                                                                                                         ]
+                                                                                                         [ xsd:maxInclusive 1.0
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                              ] ,
+                                                              [ rdf:type owl:Restriction ;
+                                                                owl:onProperty <https://lorecore.ai/ont/core.ttl#relevanceScore> ;
+                                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:decimal ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive 0.0
+                                                                                                         ]
+                                                                                                         [ xsd:maxInclusive 1.0
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                              ] ;
+                                              rdfs:comment "Оценка качества ответа от системы (satisfaction score, оценка полезности и т.д.)."@ru ;
+                                              rdfs:label "Evaluation"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#Inference
+<https://lorecore.ai/ont/core.ttl#Inference> rdf:type owl:Class ;
+                                             <http://purl.org/dc/elements/1.1/date> "2025-04-24T12:39:58Z"^^xsd:dateTime ;
+                                             rdfs:comment "Результаты работы модели"@ru ;
+                                             rdfs:label "Inference"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#Intention
+<https://lorecore.ai/ont/core.ttl#Intention> rdf:type owl:Class ;
+                                             rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Inference> ;
+                                             <http://purl.org/dc/elements/1.1/date> "2025-04-25T04:50:50Z"^^xsd:dateTime ;
+                                             rdfs:comment "Предположение о намерении в сообщении, например это вопрос или отзыв"@ru ;
+                                             rdfs:label "Intention"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#KeyFact
+<https://lorecore.ai/ont/core.ttl#KeyFact> rdf:type owl:Class ;
+                                           rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Inference> ;
+                                           <http://purl.org/dc/elements/1.1/date> "2025-04-24T12:37:24Z"^^xsd:dateTime ;
+                                           rdfs:comment "KeyFact"@en ,
+                                                        "Ключевой факт извлеченный из текста"@ru .
+
+
+###  https://lorecore.ai/ont/core.ttl#Keyword
+<https://lorecore.ai/ont/core.ttl#Keyword> rdf:type owl:Class ;
+                                           rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Inference> ;
+                                           <http://purl.org/dc/elements/1.1/date> "2025-04-24T12:36:42Z"^^xsd:dateTime ;
+                                           rdfs:comment "Ключевое слово извлеченное из текста"@ru ;
+                                           rdfs:label "Keyword" .
+
+
+###  https://lorecore.ai/ont/core.ttl#Knowledge
+<https://lorecore.ai/ont/core.ttl#Knowledge> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#LLM
+<https://lorecore.ai/ont/core.ttl#LLM> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Message
+<https://lorecore.ai/ont/core.ttl#Message> rdf:type owl:Class ;
+                                           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <https://lorecore.ai/ont/core.ttl#hasIntention> ;
+                                                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onClass <https://lorecore.ai/ont/core.ttl#Intention>
+                                                           ] ,
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <https://lorecore.ai/ont/core.ttl#hasSentiment> ;
+                                                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                             owl:onClass <https://lorecore.ai/ont/core.ttl#Sentiment>
+                                                           ] .
+
+
+###  https://lorecore.ai/ont/core.ttl#QAPair
+<https://lorecore.ai/ont/core.ttl#QAPair> rdf:type owl:Class ;
+                                          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                            owl:onProperty <https://lorecore.ai/ont/core.ttl#evaluation> ;
+                                                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                            owl:onClass <https://lorecore.ai/ont/core.ttl#Evaluation>
+                                                          ] .
+
+
+###  https://lorecore.ai/ont/core.ttl#Quant
+<https://lorecore.ai/ont/core.ttl#Quant> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Sentiment
+<https://lorecore.ai/ont/core.ttl#Sentiment> rdf:type owl:Class ;
+                                             rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Inference> ;
+                                             rdfs:comment "Класс для обозначения тональности (позитив, негатив, нейтрально и т.д.)." ;
+                                             rdfs:label "Sentiment"@en .
+
+
+###  https://lorecore.ai/ont/core.ttl#Service
+<https://lorecore.ai/ont/core.ttl#Service> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Summarisation
+<https://lorecore.ai/ont/core.ttl#Summarisation> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Inference> ;
+                                                 <http://purl.org/dc/elements/1.1/date> "2025-04-24T12:38:41Z"^^xsd:dateTime ;
+                                                 rdfs:comment "Суммаризация содержимого некоторого объекта на естественном языке, ограниченное по длине."@ru ;
+                                                 rdfs:label "Summarisation" .
+
+
+###  https://lorecore.ai/ont/core.ttl#Thread
+<https://lorecore.ai/ont/core.ttl#Thread> rdf:type owl:Class .
+
+
+###  https://lorecore.ai/ont/core.ttl#Topic
+<https://lorecore.ai/ont/core.ttl#Topic> rdf:type owl:Class ;
+                                         rdfs:subClassOf <https://lorecore.ai/ont/core.ttl#Inference> ;
+                                         rdfs:comment "Тема, о которой ведётся обсуждение, новости, статьи или которую система прогнозирует для будущего контента."@ru ;
+                                         rdfs:label "Topic"@en .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi

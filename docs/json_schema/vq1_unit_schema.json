@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://lorecore.ai/schemas/vq1_unit_schema.json",
+    "title": "Unit Object (UNIT)",
+    "description": "Объект товара или услуги, используемый для коммерческой системы.",
+    "type": "object",
+    "properties": {
+      "hasName": {
+        "type": "string",
+        "description": "Имя товара или услуги."
+      },
+      "hasPrice": {
+        "type": "number",
+        "description": "Цена товара или услуги."
+      },
+      "hasStatus": {
+        "type": ["string", "null"],
+        "description": "Статус товара (например, продается, не продается, на складе, ожидается поставка)."
+      },
+      "hasCategory": {
+        "type": ["string", "null"],
+        "description": "Категория товара, если применимо."
+      },
+      "hasDescription": {
+        "type": ["string", "null"],
+        "description": "Детальное описание товара в виде словаря с произвольными ключами."
+      }
+    },
+    "required": ["name", "price", "status"]
+  }
+  

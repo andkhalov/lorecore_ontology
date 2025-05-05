@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://lorecore.com/schemas/vq1_chunk_schema.json",
+    "title": "Chunk Object (CHUNK)",
+    "description": "Чанк – фрагмент исходного текста объекта KNOWLEDGE, готовый к векторизации.",
+    "type": "object",
+    "properties": {
+      "originKnowledge": {
+        "type": "string",
+        "format": "uuid",
+        "description": "Уникальный идентификатор исходного KNOWLEDGE объекта."
+      },
+      "keyWord": {
+        "type": "array",
+        "description": "Список ключевых слов, извлеченных из чанка.",
+        "items": { "type": "string" },
+        "minItems": 0,
+        "maxItems": 5
+      },
+      "chunkNumber": {
+        "type": "integer",
+        "description": "Номер чанка в последовательности."
+      }
+    },
+    "required": ["originTextID", "text", "keywords", "chunkNumber"]
+  }
+  

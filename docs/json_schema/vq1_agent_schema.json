@@ -1,0 +1,64 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://lorecore.ai/schemas/vq1_agent_schema.json",
+    "title": "Agent Object (AGENT)",
+    "description": "Объект агента, который может быть как человеком, так и AI. Структурно они объединены.",
+    "type": "object",
+    "properties": {
+      "agentNature": {
+        "type": "string",
+        "enum": ["PERSON", "AI"],
+        "description": "Характер агента: настоящий человек или AI."
+      },
+      "hasName": {
+        "type": "string",
+        "description": "Имя агента, внутреннее имя в системе, в случае с пользователями всегда имя самого пользователя или его ник."
+      },
+      "agentRole": {
+        "type": "string",
+        "enum": ["CUSTOMER", "USER", "SALES", "CONSULTANT", "AMBASSADOR"],
+        "description": "Роль агента в системе."
+      },
+      "gender": {
+        "type": "string",
+        "enum": ["male", "female", "other"],
+        "description": "Пол агента."
+      },
+      "age": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Возраст агента."
+      },
+      "agentContacts": {
+        "type": "object",
+        "description": "Контактные данные агента (например, телефон, email, адрес чата).",
+        "additionalProperties": { "type": "string" }
+      },
+      "hasSkill": {
+        "type": "array",
+        "description": "Навыки, которые есть у агента",
+        "items": {
+          "type": "string",
+          "skillName" : "string",
+          "skillDescription": "string"
+        }
+      },
+      "agentPolicy": {
+        "type": "string",
+        "description": "Стратегия или мастер-промпт для AI агента, если применимо.",
+        "items": {
+          "type": "string",
+          "goal" : "string",
+          "policy": "string",
+          "metrics": "string",
+          "masterPrompt": "string"
+        }
+      },
+      "agentDescription": {
+        "type": "string",
+        "description": "Общее описание агента, его характеристика или мастер-промпт для AI."
+      }
+    },
+    "required": ["agentNature", "agentName", "agentRole"]
+  }
+  

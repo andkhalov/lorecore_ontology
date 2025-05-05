@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://lorecore.ai/schemas/vq1_theread_schema.json",
+    "title": "Thread Object (THREAD)",
+    "description": "Объект треда – объединения сообщений в рамках диалога или дискуссии.",
+    "type": "object",
+    "properties": {
+      "media": {
+        "type": "string",
+        "description": "Сфера (медиа), где произошёл тред (например, telegram, twitter, whatsapp, AMO, CRM, VOIP)."
+      },
+      "streamed": {
+        "type": ["string", "null"],
+        "description": "Дополнительный канал, куда транслируется тред (если имеется)."
+      },
+      "updatedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Дата и время последнего сообщения в треде."
+      }
+    },
+    "required": ["media", "updatedAt"]
+  }
+  

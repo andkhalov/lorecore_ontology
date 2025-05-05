@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://lorecore.ai/schemas/vq1_doc_schema.json",
+    "title": "Document Object (DOC)",
+    "description": "Специфическая схема для объектов типа Документ. Объекты не проходят полный ETL, но анализируются и сохраняются как метаданные.",
+    "type": "object",
+    "properties": {
+      "link": {
+        "type": "string",
+        "description": "Ссылка или путь до файла."
+      },
+      "storage": {
+        "type": "string",
+        "description": "Адрес хранилища."
+      },
+      "fileName": {
+        "type": "string",
+        "description": "Имя файла."
+      },
+      "fileHash": {
+        "type": "string",
+        "description": "Хэш файла для контроля изменений."
+      },
+      "size": {
+        "type": "integer",
+        "description": "Размер файла в килобайтах."
+      },
+      "postedBy": {
+        "type": "string",
+        "description": "ID агента, который загрузил/отправил документ."
+      },
+      "createdBy": {
+        "type": ["string", "null"],
+        "description": "ID AI агента, если документ сгенерирован."
+      },
+      "documentType": {
+        "type": "string",
+        "description": "Формат или расширение исходного документа (например, PDF, DOCX) или его семантика."
+      }
+    },
+    "required": ["link", "fileName", "fileHash", "documentType"]
+  }
+  

@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://lorecore.ai/schemas/vq1_message_schema.json",
+    "title": "Message Object (MESSAGE)",
+    "description": "Сообщение, которое может быть как самостоятельным, так и частью треда. Дополнительно содержит username отправителя и ссылку (link) на сообщение в платформе.",
+    "type": "object",
+    "properties": {
+      "fromThread": {
+        "type": ["string", "null"],
+        "format": "uuid",
+        "description": "Идентификатор треда, если сообщение является его частью."
+      },
+      "postedBy": {
+        "type": "string",
+        "description": "ID отправителя сообщения (агент)."
+      },
+      "link": {
+        "type": ["string", "null"],
+        "description": "Ссылка на сообщение на платформе (например, ссылка на пост в социальной сети)."
+      },
+      "replyTo": {
+        "type": ["string", "null"],
+        "format": "uuid",
+        "description": "ID сообщения, на которое данное сообщение является ответом."
+      },
+      "hasReactions": {
+        "type": "object",
+        "description": "Объект с реакциями на сообщение (например, likes, views, дополнительные реакции).",
+        "properties": {
+          "likes": { "type": "integer", "minimum": 0 },
+          "views": { "type": "integer", "minimum": 0 },
+          "reactions": { "type": "object" }
+        },
+        "additionalProperties": true
+      },
+      "attachment": {
+        "type": ["string", "null"],
+        "description": "ID прикрепленного документа из типа DOC."
+      },
+      "media": {
+        "type": ["string", "null"],
+        "description": "Платформа, откуда получено сообщение (например, telegram, twitter)."
+      },
+      "hasIntention": {
+        "type": "string",
+        "enum": ["comment", "question", "answer", "request"],
+        "description": "Намерение сообщения."
+      },
+      "hasSentiment": {
+        "type": "string",
+        "enum": ["neutral", "negative", "positive"],
+        "description": "Оценка тональности сообщения."
+      }
+    },
+    "required": ["postedBy", "link", "username", "hasIntention", "hasSentiment"]
+  }
+  
