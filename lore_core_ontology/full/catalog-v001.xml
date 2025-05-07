@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="https://lorecore.ai/ont/skos#1.0.0" uri="file:/Users/andreykhalov/HULK/quant_semantic/lore_core_ontology/skos_anotations/skosan.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://lorecore.ai/ont/quant#1.0.0" uri="file:/Users/andreykhalov/HULK/quant_semantic/lore_core_ontology/quant/quant.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://lorecore.ai/ont/media#1.0.0" uri="file:/Users/andreykhalov/HULK/quant_semantic/lore_core_ontology/media/media.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://lorecore.ai/ont/inference#1.0.0" uri="file:/Users/andreykhalov/HULK/quant_semantic/lore_core_ontology/inference/inference.ttl"/>
+    <uri id="User Entered Import Resolution" name="https://lorecore.ai/ont/biz#1.0.0" uri="file:/Users/andreykhalov/HULK/quant_semantic/lore_core_ontology/biz/biz.ttl"/>
     <uri id="Imports Wizard Entry" name="https://lorecore.ai/ont/skos#SKOS/1.0.0" uri="file:/Users/andreykhalov/HULK/lorecore/graphdb/lore_core_ontology/skos_anotations/skosan.ttl"/>
     <uri id="Imports Wizard Entry" name="https://lorecore.ai/ont/media#Media/1.0.0" uri="file:/Users/andreykhalov/HULK/lorecore/graphdb/lore_core_ontology/media/media.ttl"/>
     <uri id="Imports Wizard Entry" name="https://lorecore.ai/ont/biz#Biz/1.0.0" uri="file:/Users/andreykhalov/HULK/lorecore/graphdb/lore_core_ontology/biz/biz.ttl"/>

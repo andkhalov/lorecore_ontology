@@ -3,10 +3,10 @@
 @prefix core: <https://lorecore.ai/ont/core.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@base <https://lorecore.ai/ont/skos/> .
+@base <https://lorecore.ai/ont/skos> .
 
 <https://lorecore.ai/ont/skos> rdf:type owl:Ontology ;
-                               owl:versionIRI <https://lorecore.ai/ont/skos#SKOS/1.0.0> .
+                               owl:versionIRI <https://lorecore.ai/ont/skos#1.0.0> .
 
 #################################################################
 #    Quant - базовый класс для всех объектов

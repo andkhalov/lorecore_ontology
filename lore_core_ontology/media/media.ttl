@@ -1,13 +1,14 @@
-@prefix : <https://lorecore.ai/ont/media/> .
+@prefix : <https://lorecore.ai/ont/media#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <https://lorecore.ai/ont/media/> .
+
+@base <https://lorecore.ai/ont/media> .
 
 <https://lorecore.ai/ont/media> rdf:type owl:Ontology ;
-                                 owl:versionIRI <https://lorecore.ai/ont/media#Media/1.0.0> .
+                                 owl:versionIRI <https://lorecore.ai/ont/media#1.0.0> .
 
 #################################################################
 #    Annotation properties
