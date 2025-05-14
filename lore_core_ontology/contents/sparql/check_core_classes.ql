@@ -1,0 +1,14 @@
+# Проверка наличия всех обязательных классов онтологии
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX core: <https://lorecore.ai/ont/core.ttl#>
+
+# Этот запрос проверяет наличие основных классов
+ASK {
+    core:Quant rdf:type owl:Class .
+    core:Agent rdf:type owl:Class .
+    core:Message rdf:type owl:Class .
+    core:Document rdf:type owl:Class .
+    core:Thread rdf:type owl:Class .
+    core:QAPair rdf:type owl:Class .
+}

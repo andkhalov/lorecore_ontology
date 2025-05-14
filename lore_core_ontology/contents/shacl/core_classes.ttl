@@ -1,0 +1,38 @@
+sh:property [
+        sh:path core:createdAt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Quant должен иметь ровно одно свойство createdAt."@ru ;
+        sh:datatype xsd:dateTime ;
+    ] ;
+    sh:property [
+        sh:path core:jsonVersion ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Quant должен иметь ровно одно свойство jsonVersion."@ru ;
+    ] .
+
+# Валидация класса Agent
+core:AgentShape a sh:NodeShape ;
+    sh:targetClass core:Agent ;
+    sh:property [
+        sh:path core:agentRole ;
+        sh:minCount 1 ;
+        sh:message "Agent должен иметь хотя бы одно свойство agentRole."@ru ;
+    ] ;
+    sh:property [
+        sh:path core:agentNature ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Agent должен иметь ровно одно свойство agentNature."@ru ;
+    ] .
+
+# Валидация сообщений
+core:MessageShape a sh:NodeShape ;
+    sh:targetClass core:Message ;
+    sh:property [
+        sh:path core:postedBy ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Message должен иметь ровно одно свойство postedBy."@ru ;
+    ] .
