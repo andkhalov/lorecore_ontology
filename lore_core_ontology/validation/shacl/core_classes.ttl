@@ -1,45 +1,107 @@
+# core_classes.ttl
 @prefix core: <https://lorecore.ai/ont/core.ttl#> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-sh:property [
-        sh:path core:createdAt ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "Quant должен иметь ровно одно свойство createdAt."@ru ;
-        sh:datatype xsd:dateTime ;
-    ] ;
+################################################################
+# Quant
+################################################################
+core:QuantShape
+    a               sh:NodeShape ;
+    sh:targetClass  core:Quant ;
+    sh:message       "Нарушение структуры Quant"@ru ;
+    # createdAt — ровно один
     sh:property [
-        sh:path core:jsonVersion ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "Quant должен иметь ровно одно свойство jsonVersion."@ru ;
+        sh:path       core:createdAt ;
+        sh:minCount   1 ;
+        sh:maxCount   1 ;
+        sh:message    "Quant должен иметь ровно одно свойство createdAt."@ru ;
+        sh:datatype   xsd:dateTime ;
+    ] ;
+    # jsonVersion — ровно один
+    sh:property [
+        sh:path       core:jsonVersion ;
+        sh:minCount   1 ;
+        sh:maxCount   1 ;
+        sh:message    "Quant должен иметь ровно одно свойство jsonVersion."@ru ;
     ] .
 
-# Валидация класса Agent
-core:AgentShape a sh:NodeShape ;
-    sh:targetClass core:Agent ;
+################################################################
+# Agent
+################################################################
+core:AgentShape
+    a               sh:NodeShape ;
+    sh:targetClass  core:Agent ;
+    sh:message      "Нарушена структура Agent"@ru ;
     sh:property [
-        sh:path core:agentRole ;
-        sh:minCount 1 ;
-        sh:message "Agent должен иметь хотя бы одно свойство agentRole."@ru ;
+        sh:path       core:agentRole ;
+        sh:minCount   1 ;
+        sh:message    "Agent должен иметь хотя бы одно свойство agentRole."@ru ;
     ] ;
     sh:property [
-        sh:path core:agentNature ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "Agent должен иметь ровно одно свойство agentNature."@ru ;
+        sh:path       core:agentNature ;
+        sh:minCount   1 ;
+        sh:maxCount   1 ;
+        sh:message    "Agent должен иметь ровно одно свойство agentNature."@ru ;
     ] .
 
-# Валидация сообщений
-core:MessageShape a sh:NodeShape ;
-    sh:targetClass core:Message ;
+################################################################
+# Message
+################################################################
+core:MessageShape
+    a               sh:NodeShape ;
+    sh:targetClass  core:Message ;
+    sh:message      "Нарушена структура Message"@ru ;
     sh:property [
-        sh:path core:postedBy ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "Message должен иметь ровно одно свойство postedBy."@ru ;
+        sh:path       core:postedBy ;
+        sh:minCount   1 ;
+        sh:maxCount   1 ;
+        sh:message    "Message должен иметь ровно одно свойство postedBy."@ru ;
+    ] .
+
+################################################################
+# Document
+################################################################
+core:DocumentShape
+    a               sh:NodeShape ;
+    sh:targetClass  core:Document ;
+    sh:message      "Нарушена структура Document"@ru ;
+    sh:property [
+        sh:path       core:title ;
+        sh:minCount   1 ;
+        sh:message    "Document должен иметь хотя бы одно свойство title."@ru ;
+    ] .
+
+################################################################
+# Thread
+################################################################
+core:ThreadShape
+    a               sh:NodeShape ;
+    sh:targetClass  core:Thread ;
+    sh:message      "Нарушена структура Thread"@ru ;
+    sh:property [
+        sh:path       core:hasMessage ;
+        sh:minCount   1 ;
+        sh:message    "Thread должен содержать хотя бы одно сообщение (hasMessage)."@ru ;
+    ] .
+
+################################################################
+# QAPair
+################################################################
+core:QAPairShape
+    a               sh:NodeShape ;
+    sh:targetClass  core:QAPair ;
+    sh:message      "Нарушена структура QAPair"@ru ;
+    sh:property [
+        sh:path       core:question ;
+        sh:minCount   1 ;
+        sh:message    "QAPair должен иметь вопрос (question)."@ru ;
+    ] ;
+    sh:property [
+        sh:path       core:answer ;
+        sh:minCount   1 ;
+        sh:message    "QAPair должен иметь ответ (answer)."@ru ;
     ] .

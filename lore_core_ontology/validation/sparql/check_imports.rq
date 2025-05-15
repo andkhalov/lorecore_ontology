@@ -1,10 +1,10 @@
-# Проверка согласованности импортов онтологии
+# check_imports.rq
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-# Этот запрос проверяет, что все импортируемые онтологии существуют в триплсторе
 ASK {
-    ?ontology rdf:type owl:Ontology ;
-              owl:imports ?imported .
-    ?imported rdf:type owl:Ontology .
+    # Все owl:imports должны ссылаться на существующие онтологии
+    ?ont rdf:type owl:Ontology ;
+         owl:imports ?imp .
+    ?imp rdf:type owl:Ontology .
 }
