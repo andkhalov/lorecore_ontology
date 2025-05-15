@@ -3,8 +3,15 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 ASK {
-    # Все owl:imports должны ссылаться на существующие онтологии
-    ?ont rdf:type owl:Ontology ;
-         owl:imports ?imp .
-    ?imp rdf:type owl:Ontology .
+  # Для каждого объявления owl:imports
+  ?ont a owl:Ontology ;
+       owl:imports ?imp .
+
+  # Отрезаем версию (фрагмент после #), чтобы получить «базовый» IRI
+  BIND( IRI(REPLACE(str(?imp), "#.*$", "")) AS ?base )
+
+  # Если не найдётся объявленного модуля с этим базовым IRI — это ошибка
+  FILTER NOT EXISTS {
+    ?base a owl:Ontology .
+  }
 }
